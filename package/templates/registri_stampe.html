@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <table border="1">
+        <caption>
+            <h3>Stampe</h3>
+        </caption>
+        <thead>
+            <tr><th>Nome</th><th>Tipo</th></tr>
+        </thead>
+        <tbody>
+        {% for r in registri %}
+            <tr>
+                <td><a href="{{ url_for('stampe', id=r.id) }}">{{ r.nome }}</a></td>
+                <td>{{ r.categoria }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Imposta {{ imposta.nome }}</h3>
+
+    <datalist id="registri_datalist">
+    {% for registro in registri %}
+    <option value="{{ registro.nome }}">
+    {% endfor %}
+    </datalist>
+
+    <datalist id="natura_datalist">
+    {% for n in ["", "N1", "N2", "N3", "N4", "N5", "N6", "N6.8", "N7"] %}
+    <option value="{{ n }}">
+    {% endfor %}
+    </datalist>
+
+    <datalist id="esigibilita_datalist">
+    {% for e in ["I", "D", "S"] %}
+    <option value="{{ e }}">
+    {% endfor %}
+    </datalist>
+
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+
+        <table>
+          <tr>
+            <td {{ form.posizione.label }} <br> {{ form.posizione(size=10) }} <br> {% for error in form.posizione.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.nome.label }} <br> {{ form.nome(size=15) }} <br> {% for error in form.nome.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.aliquota.label }} <br> {{ form.aliquota(size=5) }} <br> {% for error in form.aliquota.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.natura.label }} <br> {{ form.natura(size=5,list="natura_datalist",autocomplete="off") }} <br> {% for error in form.natura.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.esigibilita.label }} <br> {{ form.esigibilita(size=5,list="esigibilita_datalist",autocomplete="off") }} <br> {% for error in form.esigibilita.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.riferimento_normativo.label }} <br> {{ form.riferimento_normativo(size=15) }} <br> {% for error in form.riferimento_normativo.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+          </tr>
+          <tr>
+            <td {{ form.indetraibile.label }} <br> {{ form.indetraibile(size=10) }} <br> {% for error in form.indetraibile.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.rc.label }} <br> {{ form.rc(size=10) }} <br> {% for error in form.rc.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.no_lipe.label }} <br> {{ form.no_lipe(size=10) }} <br> {% for error in form.no_lipe.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+          </tr>
+        </table>
+        <p>{{ form.submit() }}</p>
+    </form>
+
+{% endblock %}

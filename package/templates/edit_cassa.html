@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3><a href="{{ url_for('registrazioni', id=registrazione.registro.id) }}">{{ registrazione.registro.nome }}</a>{{ " "+ registrazione.nome|string}}</h3>
+
+    <datalist id="partner_datalist">
+    {% for partner in partners %}
+    <option value="{{ partner.nome }}">
+    {% endfor %}
+    </datalist>
+
+    <datalist id="registro_datalist">
+    {% for registro in registri %}
+    <option value="{{ registro.nome }}">
+    {% endfor %}
+    </datalist>
+
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+
+        <table>
+          <tr>
+            <td {{ form.data_contabile.label }} <br> {{ form.data_contabile(size=10) }} <br> {% for error in form.data_contabile.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.importo.label }} <br> {{ form.importo(size=10) }} <br> {% for error in form.importo.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.descrizione.label }} <br> {{ form.descrizione(size=40) }} <br> {% for error in form.descrizione.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.partner.label }} <br> {{ form.partner(size=40,list="partner_datalist",autocomplete="off") }} <br> {% for error in form.partner.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+          </tr>
+        </table>
+        <p>{{ form.submit() }}</p>
+    </form>
+
+    <table border="1">
+        <caption>
+            <h3>Righe registrazione</h3>
+        </caption>
+        <thead>
+            <tr><th>Azione</th><th>Descrizione</th><th>Conto</th><th>Partner</th><th>Dare</th><th>Avere</th><th>Riconciliazione</th><th>Ricevuta</th><th>Azione</th></tr>
+        </thead>
+        <tbody>
+        {% for v in voci %}
+            <tr>
+                {% if v.conto == registrazione.registro.conto and v.conto != None %}
+                <td></td>
+                {% else %}
+                <form method="GET" action="{{ url_for('voce_cassa', id=v.id) }}">
+                <td> <input type="submit" value="Modifica"></td>
+                </form>
+                {% endif %}
+                <td>{{ v.descrizione }}</td>
+                <td>{{ v.conto.nome }}</td>
+                <td>{{ v.partner.nome }}</td>
+                {% if v.importo>=0 %}
+                <td align="right">{{ v.importo|formatimporto }}</td>
+                <td align="right">{{ 0|formatimporto }}</td>
+                {% else %}
+                <td align="right">{{ 0|formatimporto }}</td>
+                <td align="right">{{ -v.importo|formatimporto }}</td>
+                {% endif %}
+                {% if v.riconciliazione != None %}
+                <td><a href="{{ url_for('registrazione', id=v.riconciliazione.id) }}">{{ v.riconciliazione.nome }}</a></td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                
+                {% if v.registro != None %}
+                <td>{{ v.registro.nome }}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+
+                
+                
+                {% if v.conto != None and v.conto == registrazione.registro.conto %}
+                <td></td>
+                {% else %}
+                <form method="POST" action="{{ url_for('rimuovi_voce', id=v.id) }}">
+                <td> <input type="submit" value="Rimuovi"></td>
+                </form>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        <tr>
+            <td></td>
+            <td>Totale</td>
+            <td></td>
+            <td></td>
+            <td align="right">{{ dare|formatimporto }}</td>
+            <td align="right">{{ avere|formatimporto }}</td>
+            <td></td>
+            <td></td>
+            <form method="GET" action="{{ url_for('aggiungi_voce', id=registrazione.id) }}">
+            <td> <input type="submit" value="Aggiungi"></td>
+            </form>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+
+    <table border="1">
+        <thead>
+            <tr><th>Registrazione</th><th>Partner</th><th>Descrizione</th><th>Importo</th><th>Saldo</th><th>Data contabile</th><th>Azione</th></tr>
+        </thead>
+        <tbody>
+        {% for r in registrazioni %}
+            <tr>
+                <td><a href="{{ url_for('registrazione', id=r.id) }}">{{ r.nome }}</a></td>
+                <td>{{ r.partner.nome }}</td>
+                <td>{{ r.descrizione }}</td>
+                <td align="right">{{ (r.importo*r.registro.segno)|formatimporto }}</td>
+                <td align="right">{{ (r.saldo*r.registro.segno)|formatimporto }}</td>
+                <td align="right">{{ r.data_contabile|formatdate }}</td>
+                <form method="POST" action="{{ url_for('aggiungi_riconciliazione', id=registrazione.id, riconciliazione_id=r.id) }}">
+                <td> <input type="submit" value="Riconcilia"></td>
+                </form>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    
+
+
+    <table border="1">
+        <thead>
+            <tr><th>Registo</th><th>Azione</th></tr>
+        </thead>
+        <tbody>
+        {% for r in ricevute %}
+            <tr>
+                <td><a href="{{ url_for('registrazioni', id=r.id) }}">{{ r.nome }}</a></td>
+                <form method="POST" action="{{ url_for('aggiungi_ricevuta', id=registrazione.id, registro_id=r.id) }}">
+                <td> <input type="submit" value="Inserisci"></td>
+                </form>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+
+
+
+
+
+    <form action="" method="post" enctype="multipart/form-data">
+        {{ upload_form.hidden_tag() }}
+
+        <table>
+          <tr>
+            <td> {{ upload_form.file.label }} <br> {{ upload_form.file() }} <br> {% for error in upload_form.file.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td valign="bottom"> {{ upload_form.submit2() }} </td>
+          </tr>
+        </table> 
+    </form>
+
+    <table border="1">
+        <tbody>
+        {% for a in allegati %}
+            <tr>
+                <td><a href="{{ url_for('download_file', id=a.id) }}">{{ a.nome }}</a></td>
+                <form method="POST" action="{{ url_for('rimuovi_allegato', id=a.id) }}">
+                <td> <input type="submit" value="Rimuovi"></td>
+                </form>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    
+    {% if dare==avere and dare!=0 and registrazione.data_contabile != None %}
+    <form method="GET" action="{{ url_for('registra_cassa', id=registrazione.id) }}">
+    <td> <input type="submit" value="Registra"></td>
+    </form>
+    {% endif %}
+
+
+{% endblock %}

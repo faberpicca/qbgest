@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h3>{{ partner.nome }}</h3>
+
+<table>
+  <tbody>
+  <tr>
+      <td>
+    <table border="1">
+        <tbody>
+        <tr>
+            <td>Indirizzo</td>
+            <td>{{partner.indirizzo}}</td>
+        </tr>
+        <tr>
+            <td>CAP</td>
+            <td>{{partner.cap}}</td>
+        </tr>
+        <tr>
+            <td>Città</td>
+            <td>{{partner.citta}}</td>
+        </tr>
+        <tr>
+            <td>Provincia</td>
+            <td>{{partner.provincia}}</td>
+        </tr>
+        <tr>
+            <td>Codice fiscale</td>
+            <td>{{partner.cf}}</td>
+        </tr>
+        <tr>
+            <td>Partita IVA</td>
+            <td>{{partner.iva}}</td>
+        </tr>
+        <tr>
+            <td>Telefono</td>
+            <td>{{partner.telefono}}</td>
+        </tr>
+        </tbody>
+    </table>
+        </td>
+      <td>
+    <table border="1">
+        <tbody>
+        <tr>
+            <td>Cellulare</td>
+            <td>{{partner.cellulare}}</td>
+        </tr>
+        <tr>
+            <td>Fax</td>
+            <td>{{partner.fax}}</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{partner.email}}</td>
+        </tr>
+        <tr>
+            <td>Pec</td>
+            <td>{{partner.pec}}</td>
+        </tr>
+        <tr>
+            <td>SDI</td>
+            <td>{{partner.codice_destinatario}}</td>
+        </tr>
+        <tr>
+            <td>Amministratore</td>
+            <td><a href="{{ url_for('partner', id=partner.amministratore.id) }}">{{ partner.amministratore.nome }}</a></td>
+        </tr>
+        <tr>
+            <td>Letturista</td>
+            <td><a href="{{ url_for('partner', id=partner.letturista.id) }}">{{ partner.letturista.nome }}</a></td>
+        </tr>
+        </tbody>
+    </table>
+        </td>
+      <td>
+    <table border="1">
+        <tbody>
+        <tr>
+            <td>Lavoratore autonomo</td>
+            {% if partner.lav_autonomo %}
+            <td align="center">SI</td>
+            {% else %}
+            <td align="center">NO</td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td>Regime fiscale</td>
+            <td>{{partner.regime_fiscale}}</td>
+        </tr>
+        <tr>
+            <td>Pubblica amministrazione</td>
+            {% if partner.pa %}
+            <td align="center">SI</td>
+            {% else %}
+            <td align="center">NO</td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td>Ufficio REA</td>
+            <td>{{partner.rea_ufficio}}</td>
+        </tr>
+        <tr>
+            <td>Numero REA</td>
+            <td>{{partner.rea_codice}}</td>
+        </tr>
+        <tr>
+            <td>Stato liquidazione</td>
+            <td>{{partner.rea_stato_liquidatione}}</td>
+        </tr>
+        <tr>
+            <td>IBAN</td>
+            <td>{{partner.iban}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+        </td>
+    <form method="GET" action="{{ url_for('edit_partner', id=partner.id) }}">
+    <td> <input type="submit" value="Modifica"></td>
+    </form>
+        </tr>
+        </tbody>
+    </table>
+
+    <form action="" method="post" novalidate>
+        {{ filtro_form.hidden_tag() }}
+        <table>
+          <tr>
+            <td> {{ filtro_form.dal.label }} <br> {{ filtro_form.dal(size=10) }} <br> {% for error in filtro_form.dal.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td> {{ filtro_form.al.label }} <br> {{ filtro_form.al(size=10) }} <br> {% for error in filtro_form.al.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td> {{ filtro_form.tipo_data.label }} <br> {{ filtro_form.tipo_data }} <br> {% for error in filtro_form.tipo_data.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td> </td>
+            <td hidden> {{ filtro_form.partner.label }} <br> {{ filtro_form.partner(size=30,list="partner_datalist",autocomplete="off") }} <br> {% for error in filtro_form.partner.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td> {{ filtro_form.stato.label }} <br> {{ filtro_form.stato(size=30) }} <br> {% for error in filtro_form.stato.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td> </td>
+            <td hidden> {{ filtro_form.bozze.label }} <br> {{ filtro_form.bozze(size=10) }} <br> {% for error in filtro_form.bozze.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td> </td>
+            <td> {{ filtro_form.submit_filtro() }} </td>
+          </tr>
+        </table> 
+    </form>
+
+
+    <table border="1">
+        <caption>
+            <h3>Registrazioni</h3>
+        </caption>
+        <thead>
+            <tr><th>Numero</th><th>Descrizione</th><th>Data contabile</th><th>Data emissione</th><th>Data scadenza</th><th>Totale</th><th>Saldo</th><th>Origine</th></tr>
+        </thead>
+        <tbody>
+        {% for r in registrazioni %}
+            <tr>
+                <td><a href="{{ url_for('registrazione', id=r.id) }}">{{ r.nome }}</td>
+                <td>{{ r.descrizione }}</td>
+                <td>{{ r.data_contabile|formatdate }}</td>
+                <td>{{ r.data_decorrenza|formatdate }}</td>
+                <td>{{ r.data_scadenza|formatdate }}</td>
+                <td align="right">{{ r.importo|formatimporto }}</td>
+                <td align="right">{{ r.saldo|formatimporto }}</td>
+                {% if r.validazione != None %}
+                <td><a href="{{ url_for('registrazione', id=r.validazione.registrazione.id) }}">{{ r.validazione.registrazione.nome }}</a></td>
+                {% else %}
+                <td></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td align="right">{{ totale|formatimporto }}</td>
+            <td align="right">{{ saldo|formatimporto }}</td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+
+{% endblock %}

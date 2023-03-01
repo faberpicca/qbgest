@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Ritenuta {{ ritenuta.nome }}</h3>
+
+    <datalist id="registri_datalist">
+    {% for registro in registri %}
+    <option value="{{ registro.nome }}">
+    {% endfor %}
+    </datalist>
+
+    <datalist id="conti_datalist">
+    {% for conto in conti %}
+    <option value="{{ conto.nome }}">
+    {% endfor %}
+    </datalist>
+
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+
+        <table>
+          <tr>
+            <td {{ form.nome.label }} <br> {{ form.nome(size=10) }} <br> {% for error in form.nome.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.aliquota.label }} <br> {{ form.aliquota(size=10) }} <br> {% for error in form.aliquota.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.registro_ritenuta.label }} <br> {{ form.registro_ritenuta(size=20,list="registri_datalist",autocomplete="off") }} <br> {% for error in form.registro_ritenuta.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.conto_transito_ritenuta.label }} <br> {{ form.conto_transito_ritenuta(size=20,list="conti_datalist",autocomplete="off") }} <br> {% for error in form.conto_transito_ritenuta.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+          </tr>
+        </table>
+        <p>{{ form.submit() }}</p>
+    </form>
+
+{% endblock %}

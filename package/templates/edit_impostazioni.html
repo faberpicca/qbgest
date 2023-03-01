@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <datalist id="partner_datalist">
+    {% for partner in partners %}
+    <option value="{{ partner.nome }}">
+    {% endfor %}
+    </datalist>
+
+    <datalist id="conto_datalist">
+    {% for conto in conti %}
+    <option value="{{ conto.nome }}">
+    {% endfor %}
+    </datalist>
+
+    <datalist id="registro_datalist">
+    {% for registro in registri %}
+    <option value="{{ registro.nome }}">
+    {% endfor %}
+    </datalist>
+
+    <h3> Impostazioni generali </h3>
+
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+            <p {{ form.azienda.label }} <br> {{ form.azienda(size=40,list="partner_datalist",autocomplete="off") }} <br> {% for error in form.azienda.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+            <p {{ form.erario.label }} <br> {{ form.erario(size=40,list="partner_datalist",autocomplete="off") }} <br> {% for error in form.erario.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+            <p {{ form.registro_misc.label }} <br> {{ form.registro_misc(size=40,list="registro_datalist",autocomplete="off") }} <br> {% for error in form.registro_misc.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+            <p {{ form.registro_fatf.label }} <br> {{ form.registro_fatf(size=40,list="registro_datalist",autocomplete="off") }} <br> {% for error in form.registro_fatf.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+            <p {{ form.registro_notf.label }} <br> {{ form.registro_notf(size=40,list="registro_datalist",autocomplete="off") }} <br> {% for error in form.registro_notf.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+            <p {{ form.registro_fatc.label }} <br> {{ form.registro_fatc(size=40,list="registro_datalist",autocomplete="off") }} <br> {% for error in form.registro_fatc.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+            <p {{ form.registro_notc.label }} <br> {{ form.registro_notc(size=40,list="registro_datalist",autocomplete="off") }} <br> {% for error in form.registro_notc.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+            <p {{ form.registro_autofattura_rc.label }} <br> {{ form.registro_autofattura_rc(size=40,list="registro_datalist",autocomplete="off") }} <br> {% for error in form.registro_autofattura_rc.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+            <p {{ form.registro_riconciliazione_rc.label }} <br> {{ form.registro_riconciliazione_rc(size=40,list="registro_datalist",autocomplete="off") }} <br> {% for error in form.registro_riconciliazione_rc.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+            <p {{ form.registro_riconciliazione_sp.label }} <br> {{ form.registro_riconciliazione_sp(size=40,list="registro_datalist",autocomplete="off") }} <br> {% for error in form.registro_riconciliazione_sp.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+            <p {{ form.conto_perdite_profitti.label }} <br> {{ form.conto_perdite_profitti(size=40,list="conto_datalist",autocomplete="off") }} <br> {% for error in form.conto_perdite_profitti.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+            <p {{ form.conto_utile.label }} <br> {{ form.conto_utile(size=40,list="conto_datalist",autocomplete="off") }} <br> {% for error in form.conto_utile.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+            <p {{ form.conto_chiusura.label }} <br> {{ form.conto_chiusura(size=40,list="conto_datalist",autocomplete="off") }} <br> {% for error in form.conto_chiusura.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+            <p {{ form.conto_apertura.label }} <br> {{ form.conto_apertura(size=40,list="conto_datalist",autocomplete="off") }} <br> {% for error in form.conto_apertura.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+            <p {{ form.conto_lav_autonomo.label }} <br> {{ form.conto_lav_autonomo(size=40,list="conto_datalist",autocomplete="off") }} <br> {% for error in form.conto_lav_autonomo.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+            <p {{ form.imap_server.label }} <br> {{ form.imap_server(size=40) }} <br> {% for error in form.imap_server.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+            <p {{ form.imap_user.label }} <br> {{ form.imap_user(size=40) }} <br> {% for error in form.imap_user.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+            <p {{ form.imap_pwd.label }} <br> {{ form.imap_pwd(size=40) }} <br> {% for error in form.imap_pwd.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+            <p {{ form.smtp_server.label }} <br> {{ form.smtp_server(size=40) }} <br> {% for error in form.smtp_server.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+            <p {{ form.smtp_user.label }} <br> {{ form.smtp_user(size=40) }} <br> {% for error in form.smtp_user.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+            <p {{ form.smtp_pwd.label }} <br> {{ form.smtp_pwd(size=40) }} <br> {% for error in form.smtp_pwd.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+            <p {{ form.pec_sdi.label }} <br> {{ form.pec_sdi(size=40) }} <br> {% for error in form.pec_sdi.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+            <p {{ form.sequenziale_sdi.label }} <br> {{ form.sequenziale_sdi(size=40) }} <br> {% for error in form.sequenziale_sdi.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+            <p {{ form.starting_date.label }} <br> {{ form.starting_date(size=40) }} <br> {% for error in form.starting_date.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+            <p {{ form.ultimo_giorno_esercizio.label }} <br> {{ form.ultimo_giorno_esercizio(size=40) }} <br> {% for error in form.ultimo_giorno_esercizio.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+            <p>{{ form.submit() }}</p>
+    </form>
+
+
+
+{% endblock %}

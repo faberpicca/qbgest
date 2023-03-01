@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <datalist id="conti_datalist">
+    {% for conto in conti %}
+    <option value="{{ conto.nome }}">
+    {% endfor %}
+    </datalist>
+
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+
+        <table>
+          <tr>
+            <td {{ form.descrizione.label }} <br> {{ form.descrizione(size=20) }} <br> {% for error in form.descrizione.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.conto.label }} <br> {{ form.conto(size=20,list="conti_datalist",autocomplete="off") }} <br> {% for error in form.conto.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.importo.label }} <br> {{ form.importo(size=10) }} <br> {% for error in form.importo.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+          </tr>
+        </table> 
+        <p>{{ form.submit() }}</p>
+    </form>
+
+{% endblock %}

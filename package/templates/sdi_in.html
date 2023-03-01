@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br>
+
+<form method="GET" action="{{ url_for('check_sdi') }}">
+<td> <input type="submit" value="Controlla SDI"></td>
+</form>
+
+
+    <table border="1">
+        <caption>
+            <h3>Sistema di interscambio: file ricevuti</h3>
+        </caption>
+        <thead>
+            <tr><th>Descrizione</th><th>Data</th><th>Azione</th></tr>
+        </thead>
+        <tbody>
+        {% for r in records %}
+            <tr>
+                <td>{{ r.nome }}</td>
+                <td>{{ r.timestamp }}</td>
+                <form method="GET" action="{{ url_for('importa_fattura_sdi', id=r.id) }}">
+                <td> <input type="submit" value="Importa"></td>
+                </form>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+

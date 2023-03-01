@@ -1,0 +1,282 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <a href="{{ url_for('registrazione', id=registrazione_precedente.id) }}">{{ registrazione_precedente.nome }}</a>   <a href="{{ url_for('registrazione', id=registrazione_successiva.id) }}">{{ registrazione_successiva.nome }}</a>
+    <h3><a href="{{ url_for('registrazioni', id=registrazione.registro.id) }}">{{ registrazione.registro.nome }}</a>{{ " "+ registrazione.nome|string}}
+    {% if registrazione.validazione != None %}
+    GENERATA DA
+    <a href="{{ url_for('registrazione', id=registrazione.validazione.registrazione.id) }}">{{registrazione.validazione.registrazione.nome }}</a>
+    {% endif %}</h3>
+
+
+    <table border="1">
+        <thead>
+            <tr><th>Partner</th><th>Lav.Aut.</th><th>Numero</th><th>Descrizione</th><th>Data contabile</th><th>Data emissione</th><th>Data scadenza</th></tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><a href="{{ url_for('partner', id=registrazione.partner.id) }}">{{ registrazione.partner.nome }}</a></td>
+            {% if registrazione.lav_autonomo %}
+            <td align="center">SI</td>
+            {% else %}
+            <td align="center">NO</td>
+            {% endif %}
+            <td>{{ registrazione.numero_origine }}</td>
+            <td>{{ registrazione.descrizione }}</td>
+            <td align="right">{{ registrazione.data_contabile|formatdate }}</td>
+            <td align="right">{{ registrazione.data_decorrenza|formatdate }}</td>
+            <td align="right">{{ registrazione.data_scadenza|formatdate }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    {% if registrazione.tipo_documento != None %}
+    <table border="1">
+        <thead>
+            <tr><th>Domiciliatario</th><th>Termini di pagamento</th></tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><a href="{{ url_for('partner', id=domiciliatario.id) }}">{{ domiciliatario.nome }}</a></td>
+            <td>{{ registrazione.pagamento.nome }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table>
+        <tbody>
+        {% for c in causale %}
+        <tr>
+            <td>{{ c }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    <table border="1">
+        <caption>
+            <h3>Voci</h3>
+        </caption>
+        <thead>
+            <tr><th>Descrizione</th><th>Conto</th><th>Quantità</th><th>Prezzo</th><th>Imposta</th><th>Ritenuta</th><th>Importo</th><th>Esercizio</th><th>Azione</th></tr>
+        </thead>
+        <tbody>
+        {% for v in voci %}
+            <tr>
+                <td>{{ v.descrizione }}</td>
+                <td><a href="{{ url_for('movimenti', id=v.conto.id) }}">{{ v.conto.nome }}</a></td>
+                <td align="right">{{ v.quantita|formatimportolong }}</td>
+                <td align="right">{{ v.importo|formatimportolong }}</td>
+                <td>{{ v.imposta.nome }}</td>
+                <td>{{ v.ritenuta.nome }}</td>
+                <td align="right">{{ (v.quantita*v.importo)|formatimporto }}</td>
+                {% if v.esercizio_precedente %}
+                    <td>Precedente</td>
+                {% else %}
+                    <td>Corrente</td>
+                {% endif %}
+                <form method="GET" action="{{ url_for('cambia_conto', id=v.id) }}">
+                <td> <input type="submit" value="Cambia conto"></td>
+                </form>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <table>
+    <tbody>
+    <tr>
+    <td>
+    <table border="1">
+        <caption>
+            <h3>Imposte</h3>
+        </caption>
+        <thead>
+            <tr><th>Imponibile</th><th>IVA</th><th>Imposta</th></tr>
+        </thead>
+        <tbody>
+        {% for voce in voci_iva %}
+            <tr>
+                <td align="right">{{ voce.imponibile|formatimporto }}</td>
+                <td>{{ voce.imposta.nome }}</td>
+                <td align="right">{{ voce.iva|formatimporto }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    </td>
+    <td>
+
+    {% if (voci_ritenuta|length) >0 %}
+    <table border="1">
+        <caption>
+            <h3>Ritenute</h3>
+        </caption>
+        <thead>
+            <tr><th>Imponibile</th><th>Tipo</th><th>Ritenuta</th></tr>
+        </thead>
+        <tbody>
+        {% for voce in voci_ritenuta %}
+            <tr>
+                <td align="right">{{ voce.imponibile|formatimporto }}</td>
+                <td>{{ voce.ritenuta.nome }}</td>
+                <td align="right">{{ voce.ra|formatimporto }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    </td>
+    <td>
+
+
+    <table border="1">
+        <caption>
+            <h3>Riepilogo</h3>
+        </caption>
+        <tbody>
+        <tr>
+            <td><b>Totale imponibile</b></td>
+            <td align="right">{{ tot_imponibile|formatimporto }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><b>Totale imposte</b></td>
+            <td align="right">{{ tot_imposta|formatimporto }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><b>Totale</b></td>
+            <td align="right">{{ totale|formatimporto }}</td>
+            <td></td>
+        </tr>
+    {% if (voci_ritenuta|length) >0 %}
+        <tr>
+            <td><b>Totale ritenute</b></td>
+            <td align="right">{{ tot_ritenuta|formatimporto }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><b>Totale da pagare</b></td>
+            <td align="right">{{ totale_pagare|formatimporto }}</td>
+            <td></td>
+        </tr>
+    {% endif %}
+        {% for r in riconciliazioni %}
+            <tr>
+                <td><a href="{{ url_for('registrazione', id=r.validazione.registrazione.id) }}">{{ r.validazione.registrazione.nome }}</a></td>
+                <td align="right">{{ (registrazione.registro.segno*r.movimento.importo)|formatimporto }}</td>
+                <td align="right">{{ r.validazione.registrazione.data_contabile|formatdate }}</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td><b>Saldo</b></td>
+            <td align="right">{{ (registrazione.registro.segno*registrazione.saldo)|formatimporto }}</td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+
+    </tr>
+    </tbody>
+    </table>
+
+    <table border="1">
+        <caption>
+            <h3>Righe registrazione</h3>
+        </caption>
+        <thead>
+            <tr><th>Descrizione</th><th>Conto</th><th>Partner</th><th>Dare</th><th>Avere</th><th>Data contabile</th></tr>
+        </thead>
+        <tbody>
+        {% for m in movimenti %}
+            <tr>
+                <td>{{ m.descrizione }}</td>
+                <td><a href="{{ url_for('movimenti', id=m.conto.id) }}">{{ m.conto.nome }}</a></td>
+                <td><a href="{{ url_for('partner', id=m.partner.id) }}">{{ m.partner.nome }}</a></td>
+                {% if m.importo>=0 %}
+                <td align="right">{{ m.importo|formatimporto }}</td>
+                <td align="right">0,00</td>
+                {% else %}
+                <td align="right">0,00</td>
+                <td align="right">{{ -m.importo|formatimporto }}</td>
+                {% endif %}
+                <td align="right">{{ m.data_contabile|formatdate }}</td>
+                </form>
+        {% endfor %}
+        <tr>
+            <td>Totale</td>
+            <td></td>
+            <td></td>
+            <td align="right">{{ dare|formatimporto }}</td>
+            <td align="right">{{ avere|formatimporto }}</td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br>
+
+    <table border="1">
+        <caption>
+            <h3>Registrazioni generate</h3>
+        </caption>
+        <thead>
+            <tr><th>Descrizione</th><th>Partner</th><th>Importo</th><th>Registrazione</th></tr>
+        </thead>
+        <tbody>
+        {% for r in registrazioni_generate %}
+            <tr>
+                <td>{{ r.descrizione }}</td>
+                <td>{{ r.partner.nome }}</td>
+                <td align="right">{{ r.importo|formatimporto }}</td>
+                <td><a href="{{ url_for('registrazione', id=r.id) }}">{{ r.nome }}</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+
+    <table border="1">
+        <caption>
+            <h3>Allegati</h3>
+        </caption>
+        <tbody>
+        {% for a in allegati %}
+            <tr>
+                <td><a href="{{ url_for('download_file', id=a.id) }}">{{ a.nome }}</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+    {% if registrazione.validazione == None %}
+        <form method="GET" action="{{ url_for('annulla_registrazione', id=registrazione.id) }}">
+        <td> <input type="submit" value="Annulla registrazione"></td>
+        </form>
+    {% endif %}
+
+    <table border="1">
+        <caption>
+            <h3>Sistema di Interscambio</h3>
+        </caption>
+        <thead>
+            <tr><th>Documento</th><th>Data e ora di invio</th></tr>
+        </thead>
+        <tbody>
+        {% for s in registrazione.sdi %}
+            <tr>
+                <td><a href="{{ url_for('sdi', id=s.id) }}">{{ s.nome }}</a></td>
+                <td>{{ s.timestamp }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

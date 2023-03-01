@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <datalist id="tipi_datalist">
+    {% for categoria in ["Registro IVA", "Liquidazione IVA", "Partitario", "Libro Giornale", "Libro Mastro", "Bilancio Contabile"] %}
+    <option value="{{ categoria }}">
+    {% endfor %}
+    </datalist>
+
+    <datalist id="registri_datalist">
+    {% for registro in registri %}
+    <option value="{{ registro.nome }}">
+    {% endfor %}
+    </datalist>
+
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+
+        <table>
+          <tr>
+            <td {{ form.posizione.label }} <br> {{ form.posizione(size=5) }} <br> {% for error in form.posizione.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.nome.label }} <br> {{ form.nome(size=30) }} <br> {% for error in form.nome.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.categoria.label }} <br> {{ form.categoria(size=20,list="tipi_datalist",autocomplete="off") }} <br> {% for error in form.categoria.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+          </tr>
+        </table> 
+        <p>{{ form.submit() }}</p>
+    </form>
+
+    <table border="1">
+        <thead>
+            <tr><th>Registro</th><th>Azione</th></tr>
+        </thead>
+        <tbody>
+        {% for r in filtro_registro %}
+            <tr>
+                <td>{{ r.registro.nome }}</td>
+                <form method="GET" action="{{ url_for('rimuovi_filtro_registro', id=r.id) }}">
+                <td> <input type="submit" value="Rimuovi"></td>
+                </form>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td></td>
+        <form method="GET" action="{{ url_for('aggiungi_filtro_registro', id=registro_stampa.id) }}">
+        <td> <input type="submit" value="Aggiungi"></td>
+        </form>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+
+{% endblock %}

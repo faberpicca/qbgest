@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h2>{{ testo }}</h2>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <table>
+          <tr>
+            <td {{ form.data_delibera.label }} <br> {{ form.data_delibera(size=20) }} <br> {% for error in form.data_delibera.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+          </tr>
+        </table> 
+        <p>{{ form.submit() }}</p>
+    </form>
+
+{% endblock %}
+

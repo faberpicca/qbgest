@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h3> Impostazioni </h3>
+    <br>
+
+    <h3><a href="{{ url_for('impostazioni_generali') }}"> Impostazioni generali </a></h3>
+    <h3><a href="{{ url_for('imposta_mastri') }}"> Piano dei conti </a></h3>
+    <h3><a href="{{ url_for('imposta_imposte') }}"> Imposte </a></h3>
+    <h3><a href="{{ url_for('imposta_ritenute') }}"> Ritenute </a></h3>
+    <h3><a href="{{ url_for('imposta_registri') }}"> Registri </a></h3>
+    <h3><a href="{{ url_for('imposta_registri_stampa') }}"> Registri stampa </a></h3>
+    <h3><a href="{{ url_for('log') }}"> Log </a></h3>
+    <br>
+    <form method="POST" action="{{ url_for('chiusura_apertura') }}">
+    <td> <input type="submit" value="Chiudi anno fiscale"></td>
+    </form>
+
+
+{% endblock %}

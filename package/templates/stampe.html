@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <table border="1">
+        <caption>
+            <h3> {{ "STAMPA "+registro.nome }} </h3>
+        </caption>
+        <thead>
+            <tr><th>Descrizione</th><th>Decorrenza</th><th>Scadenza</th><th>Anno</th><th>Ultima pagina</th><th>Ultima riga</th><th>Azione</th></tr>
+        </thead>
+        <tbody>
+        {% for s in stampe %}
+            <tr>
+                <td><a href="{{ url_for('stampa', id=s.id) }}">{{ s.nome }}</a></td>
+                <td>{{ s.data_decorrenza|formatdate }}</td>
+                <td>{{ s.data_scadenza|formatdate }}</td>
+                {% if show %}
+                <td>{{ s.anno_stampa }}</td>
+                <td>{{ s.ultima_pagina_stampa }}</td>
+                <td>{{ s.ultima_riga_stampa }}</td>
+                {% else %}
+                <td></td>
+                <td></td>
+                <td></td>
+                {% endif %}
+                <form method="POST" action="{{ url_for('rimuovi_stampa', id=s.id) }}">
+                <td> <input type="submit" value="Rimuovi"></td>
+                </form>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+    <form method="GET" action="{{ url_for('aggiungi_stampa', id=registro.id) }}">
+    <td> <input type="submit" value="Aggiungi"></td>
+    </form>
+
+{% endblock %}
+

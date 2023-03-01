@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <datalist id="conti_datalist">
+    {% for conto in conti %}
+    <option value="{{ conto.nome }}">
+    {% endfor %}
+    </datalist>
+
+    <datalist id="imposte_datalist">
+    {% for imposta in imposte %}
+    <option value="{{ imposta.nome }}">
+    {% endfor %}
+    </datalist>
+
+    <datalist id="ritenute_datalist">
+    {% for ritenuta in ritenute %}
+    <option value="{{ ritenuta.nome }}">
+    {% endfor %}
+    </datalist>
+
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+
+        <table>
+          <tr>
+            <td {{ form.descrizione.label }} <br> {{ form.descrizione(size=40) }} <br> {% for error in form.descrizione.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.conto.label }} <br> {{ form.conto(size=40,list="conti_datalist",autocomplete="off") }} <br> {% for error in form.conto.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.quantita.label }} <br> {{ form.quantita(size=10) }} <br> {% for error in form.quantita.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.importo.label }} <br> {{ form.importo(size=10) }} <br> {% for error in form.importo.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.imposta.label }} <br> {{ form.imposta(size=10,list="imposte_datalist",autocomplete="off") }} <br> {% for error in form.imposta.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.ritenuta.label }} <br> {{ form.ritenuta(size=10,list="ritenute_datalist",autocomplete="off") }} <br> {% for error in form.ritenuta.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.esercizio_precedente.label }} <br> {{ form.esercizio_precedente(size=10) }} <br> {% for error in form.esercizio_precedente.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+          </tr>
+        </table> 
+        <p>{{ form.submit() }}</p>
+    </form>
+
+{% endblock %}

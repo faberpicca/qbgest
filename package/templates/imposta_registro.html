@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <datalist id="conti_datalist">
+    {% for conto in conti %}
+    <option value="{{ conto.nome }}">
+    {% endfor %}
+    </datalist>
+
+    <datalist id="tipo_documento_datalist">
+    {% for tipo in tipi_documento %}
+    <option value="{{ tipo.codice }}">
+    {% endfor %}
+    </datalist>
+
+    <datalist id="tipi_datalist">
+    {% for categoria in ["Fattura", "Cassa", "Generico", "Ricevuta", "IVA"] %}
+    <option value="{{ categoria }}">
+    {% endfor %}
+    </datalist>
+
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+
+        <table>
+          <tr>
+            <td {{ form.posizione.label }} <br> {{ form.posizione(size=10) }} <br> {% for error in form.posizione.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.codice.label }} <br> {{ form.codice(size=10) }} <br> {% for error in form.codice.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.nome.label }} <br> {{ form.nome(size=20) }} <br> {% for error in form.nome.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.categoria.label }} <br> {{ form.categoria(size=10,list="tipi_datalist",autocomplete="off") }} <br> {% for error in form.categoria.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.tipo_documento.label }} <br> {{ form.tipo_documento(size=10,list="tipo_documento_datalist",autocomplete="off") }} <br> {% for error in form.tipo_documento.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.segno.label }} <br> {{ form.segno(size=10) }} <br> {% for error in form.segno.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+          </tr>
+        </table> 
+        <table>
+          <tr>
+            <td {{ form.conto.label }} <br> {{ form.conto(size=30,list="conti_datalist",autocomplete="off") }} <br> {% for error in form.conto.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.conto_iva.label }} <br> {{ form.conto_iva(size=30,list="conti_datalist",autocomplete="off") }} <br> {% for error in form.conto_iva.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.conto_precedente.label }} <br> {{ form.conto_precedente(size=30,list="conti_datalist",autocomplete="off") }} <br> {% for error in form.conto_precedente.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+          </tr>
+        </table> 
+        <p>{{ form.submit() }}</p>
+    </form>
+
+{% endblock %}

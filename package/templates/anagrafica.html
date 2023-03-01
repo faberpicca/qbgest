@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h2>Anagrafica</h2>
+    <hr>
+
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.search.label }}<br>
+            {{ form.search(size=32) }}<br>
+            {% for error in form.search.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+
+    <form method="GET" action="{{ url_for('aggiungi_partner') }}">
+    <td> <input type="submit" value="Aggiungi"></td>
+    </form>
+
+    <table border="1">
+        <caption>
+            <h3>Partners</h3>
+        </caption>
+        <thead>
+            <tr><th>Nome</th><th>Azione</th></tr>
+        </thead>
+        <tbody>
+        {% for p in partners %}
+            <tr>
+                <td><a href="{{ url_for('partner', id=p.id) }}">{{ p.nome }}</a></td>
+                <form method="POST" action="{{ url_for('rimuovi_partner', id=p.id) }}">
+                <td> <input type="submit" value="Rimuovi"></td>
+                </form>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+
+

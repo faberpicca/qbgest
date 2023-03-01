@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Mastro {{ mastro.nome }}</h3>
+
+    <datalist id="tipo_datalist">
+    {% for tipo in ["Attività", "Passività", "Costi", "Ricavi", "Altro"] %}
+    <option value="{{ tipo }}">
+    {% endfor %}
+    </datalist>
+
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+
+        <table>
+          <tr>
+            <td {{ form.codice.label }} <br> {{ form.codice(size=10) }} <br> {% for error in form.codice.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.nome.label }} <br> {{ form.nome(size=20) }} <br> {% for error in form.nome.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.tipo.label }} <br> {{ form.tipo(size=20,list="tipo_datalist",autocomplete="off") }} <br> {% for error in form.tipo.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+          </tr>
+        </table>
+        <p>{{ form.submit() }}</p>
+    </form>
+
+
+    <table border="1">
+        <caption>
+            <h3>Sottomastri</h3>
+        </caption>
+        <thead>
+            <tr><th>Codice</th><th>Nome</th><th>Azione</th></tr>
+        </thead>
+        <tbody>
+        {% for s in sottomastri %}
+            <tr>
+                <td align="center">{{ s.mastro.codice|format2+"."+s.codice|format2 }}</td>
+                <td><a href="{{ url_for('imposta_sottomastro', id=s.id) }}">{{ s.nome }}</a></td>
+                <form method="GET" action="{{ url_for('rimuovi_sottomastro', id=s.id) }}">
+                <td> <input type="submit" value="Rimuovi"></td>
+                </form>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <form method="GET" action="{{ url_for('aggiungi_sottomastro', id=mastro.id) }}">
+    <td> <input type="submit" value="Aggiungi"></td>
+    </form>
+
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <table border="1">
+        <caption>
+            <h3>Ritenute</h3>
+        </caption>
+        <thead>
+            <tr><th>Ritenuta</th><th>Azione</th></tr>
+        </thead>
+        <tbody>
+        {% for r in ritenute %}
+            <tr>
+                <td><a href="{{ url_for('imposta_ritenuta', id=r.id) }}">{{ r.nome }}</a></td>
+                <form method="GET" action="{{ url_for('rimuovi_ritenuta', id=r.id) }}">
+                <td> <input type="submit" value="Rimuovi"></td>
+                </form>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <form method="GET" action="{{ url_for('aggiungi_ritenuta') }}">
+    <td> <input type="submit" value="Aggiungi"></td>
+    </form>
+
+{% endblock %}
+

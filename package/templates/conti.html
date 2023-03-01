@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <table border="1">
+        <caption>
+            <h3>Conti dal {{ inizio|formatdate }}</h3>
+        </caption>
+        <thead>
+            <tr><th>Codice</th><th>Nome</th><th>Saldo</th><th>Azione</th></tr>
+        </thead>
+        <tbody>
+        {% for i in range(conti|length) %}
+            <tr>
+                <td align="center">{{ conti[i].sottomastro.mastro.codice|format2+"."+conti[i].sottomastro.codice|format2+"."+conti[i].codice|format3 }}</td>
+                <td><a href="{{ url_for('movimenti', id=conti[i].id) }}">{{ conti[i].nome }}</a></td>
+                <td align="right">{{ saldo[i]|formatimporto }}</td>
+                </form>
+                <form method="GET" action="{{ url_for('stampa_mastrino', id=conti[i].id)}}">
+                <td> <input type="submit" value="Stampa"></td>
+                </form>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+

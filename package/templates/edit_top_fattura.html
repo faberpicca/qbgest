@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <datalist id="partner_datalist">
+    {% for partner in partners %}
+    <option value="{{ partner.nome }}">
+    {% endfor %}
+    </datalist>
+
+    <datalist id="pagamento_datalist">
+    {% for pagamento in pagamenti %}
+    <option value="{{ pagamento.nome }}">
+    {% endfor %}
+    </datalist>
+
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <table>
+          <tr>
+            <td {{ form.partner.label }} <br> {{ form.partner(size=40,list="partner_datalist",autocomplete="off") }} <br> {% for error in form.partner.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.numero_origine.label }} <br> {{ form.numero_origine(size=20) }} <br> {% for error in form.numero_origine.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.data_contabile.label }} <br> {{ form.data_contabile(size=10) }} <br> {% for error in form.data_contabile.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.data_decorrenza.label }} <br> {{ form.data_decorrenza(size=10) }} <br> {% for error in form.data_decorrenza.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.data_scadenza.label }} <br> {{ form.data_scadenza(size=10) }} <br> {% for error in form.data_scadenza.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+          </tr>
+        </table>
+        <table>
+          <tr>
+            <td {{ form.descrizione.label }} <br> {{ form.descrizione(size=95) }} <br> {% for error in form.descrizione.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+          </tr>
+        </table>
+        <p>{{ form.submit() }}</p>
+    </form>
+
+{% endblock %}

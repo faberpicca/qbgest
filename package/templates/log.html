@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <table border="1">
+        <caption>
+            <h3>{{ Log }}</h3>
+        </caption>
+        <thead>
+            <tr><th>Timestamp</th><th>User</th><th>DataLog</th></tr>
+        </thead>
+        <tbody>
+        {% for l in logs %}
+            <tr>
+                <td>{{ l.timestamp }}</td>
+                <td>{{ l.user }}</td>
+                <td>{{ l.datalog }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

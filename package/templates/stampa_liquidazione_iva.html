@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <datalist id="registrazione_datalist">
+    {% for registrazione in registrazioni %}
+    <option value="{{ registrazione.nome }}">
+    {% endfor %}
+    </datalist>
+
+    <h3><a href="{{ url_for('stampe', id=stampa.registro_stampa.id) }}">{{ stampa.registro_stampa.nome }}</a></h3>
+
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+
+        <table>
+          <tr>
+            <td {{ form.registrazione.label }} <br> {{ form.registrazione(size=40,list="registrazione_datalist",autocomplete="off") }} <br> {% for error in form.registrazione.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.anno_stampa.label }} <br> {{ form.anno_stampa(size=10) }} <br> {% for error in form.anno_stampa.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.precedente_pagina_stampa.label }} <br> {{ form.precedente_pagina_stampa(size=10) }} <br> {% for error in form.precedente_pagina_stampa.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+          </tr>
+        </table>
+
+        <table>
+          <tr>
+            <td {{ form.VP7.label }} <br> {{ form.VP7(size=10) }} <br> {% for error in form.VP7.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.VP8.label }} <br> {{ form.VP8(size=10) }} <br> {% for error in form.VP8.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.VP9.label }} <br> {{ form.VP9(size=10) }} <br> {% for error in form.VP9.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.VP10.label }} <br> {{ form.VP10(size=10) }} <br> {% for error in form.VP10.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.VP11.label }} <br> {{ form.VP11(size=10) }} <br> {% for error in form.VP11.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+          </tr>
+        </table>
+
+        {% if allegati == [] %}
+            <p>{{ form.submit() }}</p>
+        {% endif %}
+
+    </form>
+
+    <table>
+        <tbody>
+        {% for a in allegati %}
+            <tr>
+                <td><a href="{{ url_for('download_file', id=a.id) }}">{{ a.nome }}</a></td>
+                <form method="POST" action="{{ url_for('rimuovi_allegato_stampa', id=a.id) }}">
+                <td> <input type="submit" value="Rimuovi"></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

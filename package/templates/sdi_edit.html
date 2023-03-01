@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br>
+
+<form method="POST" action="{{ url_for('check_sdi') }}">
+<td> <input type="submit" value="Controlla SDI"></td>
+</form>
+
+
+    <table border="1">
+        <caption>
+            <h3>Sistema di interscambio: file ricevuti</h3>
+        </caption>
+        <thead>
+            <tr><th>Descrizione</th><th>Data</th><th>Fattura</th><th>Azione</th><th>Azione</th></tr>
+        </thead>
+        <tbody>
+        {% for r in records %}
+            <tr>
+                <td><a href="{{ url_for('sdi', id=r.id) }}">{{ r.nome }}</a></td>
+                <td>{{ r.timestamp }}</td>
+                <td><a href="{{ url_for('registrazione', id=r.registrazione.id) }}">{{ r.registrazione.nome }}</td>
+                {% if r.fattura %}
+                <form method="POST" action="{{ url_for('importa_fattura_sdi', id=r.id) }}">
+                <td> <input type="submit" value="Importa"></td>
+                </form>
+                {% else %}
+                <td></td>
+                {% endif %}
+                <form method="POST" action="{{ url_for('rimuovi_record_sdi', id=r.id) }}">
+                <td> <input type="submit" value="Rimuovi"></td>
+                </form>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+

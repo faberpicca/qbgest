@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <table border="1">
+        <caption>
+            <h3>Mastri</h3>
+        </caption>
+        <thead>
+            <tr><th>Codice</th><th>Nome</th><th>Azione</th></tr>
+        </thead>
+        <tbody>
+        {% for m in mastri %}
+            <tr>
+                <td align="center">{{ m.codice|format2 }}</td>
+                <td><a href="{{ url_for('imposta_mastro', id=m.id) }}">{{ m.nome }}</a></td>
+                <form method="GET" action="{{ url_for('rimuovi_mastro', id=m.id) }}">
+                <td> <input type="submit" value="Rimuovi"></td>
+                </form>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <form method="GET" action="{{ url_for('aggiungi_mastro') }}">
+    <td> <input type="submit" value="Aggiungi"></td>
+    </form>
+
+
+
+{% endblock %}
+

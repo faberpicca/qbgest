@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <table border="1">
+        <caption>
+            <h3>Registri</h3>
+        </caption>
+        <thead>
+            <tr><th>Posizione</th><th>Codice</th><th>Descrizione</th><th>Categoria</th><th>Azione</th></tr>
+        </thead>
+        <tbody>
+        {% for r in registri %}
+            <tr>
+                <td>{{ r.posizione }}</td>
+                <td><a href="{{ url_for('imposta_registro', id=r.id) }}">{{ r.codice }}</a></td>
+                <td>{{ r.nome }}</td>
+                <td>{{ r.categoria }}</td>
+                <form method="GET" action="{{ url_for('rimuovi_registro', id=r.id) }}">
+                <td> <input type="submit" value="Rimuovi"></td>
+                </form>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <form method="GET" action="{{ url_for('aggiungi_registro') }}">
+    <td> <input type="submit" value="Aggiungi"></td>
+    </form>
+
+
+{% endblock %}
+

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <datalist id="pagamento_datalist">
+    {% for pagamento in pagamenti %}
+    <option value="{{ pagamento.nome }}">
+    {% endfor %}
+    </datalist>
+
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <table>
+          <tr>
+            <td {{ form.pagamento.label }} <br> {{ form.pagamento(size=40,list="pagamento_datalist",autocomplete="off") }} <br> {% for error in form.pagamento.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.letturista.label }} <br> {{ form.letturista(size=10) }} <br> {% for error in form.letturista.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+          </tr>
+        </table>
+        <p>{{ form.note.label }} <br> {{ form.note }} <br> {% for error in form.note.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</p>
+        <p>{{ form.submit() }}</p>
+    </form>
+
+{% endblock %}

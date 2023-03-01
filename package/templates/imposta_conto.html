@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Mastro <a href="{{ url_for('imposta_mastro', id=conto.sottomastro.mastro.id) }}">{{ conto.sottomastro.mastro.nome }}</a> sottomastro <a href="{{ url_for('imposta_sottomastro', id=conto.sottomastro.id) }}">{{ conto.sottomastro.nome }}</a>  Conto {{ conto.nome }} </h3>
+
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+
+    <datalist id="sottomastri_datalist">
+    {% for sottomastro in sottomastri %}
+    <option value="{{ sottomastro.nome }}">
+    {% endfor %}
+    </datalist>
+
+
+        <table>
+          <tr>
+            <td {{ form.codice.label }} <br> {{ form.codice(size=5) }} <br> {% for error in form.codice.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.descrizione.label }} <br> {{ form.descrizione(size=40) }} <br> {% for error in form.descrizione.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.sottomastro.label }} <br> {{ form.sottomastro(size=40,list="sottomastri_datalist",autocomplete="off") }} <br> {% for error in form.sottomastro.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+          </tr>
+        </table>
+        <p>{{ form.submit() }}</p>
+    </form>
+
+{% endblock %}

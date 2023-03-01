@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <datalist id="partner_datalist">
+    {% for partner in partners %}
+    <option value="{{ partner.nome }}">
+    {% endfor %}
+    </datalist>
+
+    <h3>{{ partner.nome }}</h3>
+
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <table>
+          <tr>
+            <td {{ form.nome.label }} <br> {{ form.nome(size=50) }} <br> {% for error in form.nome.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.cf.label }} <br> {{ form.cf(size=10) }} <br> {% for error in form.cf.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.iva.label }} <br> {{ form.iva(size=10) }} <br> {% for error in form.iva.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.indirizzo.label }} <br> {{ form.indirizzo(size=20) }} <br> {% for error in form.indirizzo.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.cap.label }} <br> {{ form.cap(size=10) }} <br> {% for error in form.cap.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.citta.label }} <br> {{ form.citta(size=10) }} <br> {% for error in form.citta.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.provincia.label }} <br> {{ form.provincia(size=10) }} <br> {% for error in form.provincia.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+          </tr>
+        </table> 
+        <table>
+          <tr>
+            <td {{ form.telefono.label }} <br> {{ form.telefono(size=20) }} <br> {% for error in form.telefono.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.cellulare.label }} <br> {{ form.cellulare(size=20) }} <br> {% for error in form.cellulare.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.fax.label }} <br> {{ form.fax(size=20) }} <br> {% for error in form.fax.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.email.label }} <br> {{ form.email(size=20) }} <br> {% for error in form.email.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.pec.label }} <br> {{ form.pec(size=20) }} <br> {% for error in form.pec.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.codice_destinatario.label }} <br> {{ form.codice_destinatario(size=20) }} <br> {% for error in form.codice_destinatario.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+          </tr>
+        </table> 
+        <table>
+          <tr>
+            <td {{ form.amministratore.label }} <br> {{ form.amministratore(size=40,list="partner_datalist",autocomplete="off") }} <br> {% for error in form.amministratore.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.letturista.label }} <br> {{ form.letturista(size=40,list="partner_datalist",autocomplete="off") }} <br> {% for error in form.letturista.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.regime_fiscale.label }} <br> {{ form.regime_fiscale(size=20) }} <br> {% for error in form.regime_fiscale.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.pa.label }} <br> {{ form.pa(size=10) }} <br> {% for error in form.pa.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.lav_autonomo.label }} <br> {{ form.lav_autonomo(size=10) }} <br> {% for error in form.lav_autonomo.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+          </tr>
+        </table> 
+        <table>
+          <tr>
+            <td {{ form.rea_ufficio.label }} <br> {{ form.rea_ufficio(size=20) }} <br> {% for error in form.rea_ufficio.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.rea_codice.label }} <br> {{ form.rea_codice(size=20) }} <br> {% for error in form.rea_codice.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.rea_stato_liquidatione.label }} <br> {{ form.rea_stato_liquidatione(size=20) }} <br> {% for error in form.rea_stato_liquidatione.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.iban.label }} <br> {{ form.iban(size=20) }} <br> {% for error in form.iban.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+          </tr>
+        </table> 
+        <p>{{ form.submit() }}</p>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <title>QBGest</title>
+    </head>
+    <style>a {text-decoration: none;color: #0060B6;} </style>
+    <body style="background-color:rgb(252, 243, 207)">
+        <div>
+        <table style="width:100%">
+          <tr>
+            <td style="width:120px"><a style="font-size:18px;" href="{{ url_for('registri') }}">Registri</a></td>
+            <td style="width:120px"><a style="font-size:18px;" href="{{ url_for('conti') }}">Conti</a></td>
+            <td style="width:120px"><a style="font-size:18px;" href="{{ url_for('anagrafica') }}">Anagrafica</a></td>
+            <td style="width:120px"><a style="font-size:18px;" href="{{ url_for('registri_stampe') }}">Stampe</a></td>
+            <td style="width:120px"><a style="font-size:18px;" href="{{ url_for('sdi_in') }}">SDI</a></td>
+            <td></td>
+            {% if current_user.is_anonymous %}
+            <td style="width:120px"><a style="font-size:18px;" href="{{ url_for('login') }}">Login</a></td>
+            {% else %}
+            <td style="width:120px">{{ current_user.username }}</td>
+            <td style="width:120px"><a style="font-size:18px;" href="{{ url_for('modifica_data') }}">{{ current_user.data|formatdate }}</a></td>
+            <td style="width:120px"><a style="font-size:18px;" href="{{ url_for('impostazioni') }}">Impostazioni</a></td>
+            <td style="width:120px"><a style="font-size:18px;" href="{{ url_for('logout') }}">Logout</a></td>
+
+            {% endif %}
+          </tr>
+        </table> 
+        </div>
+        
+        <hr>
+
+        <div align="center">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <p style="background-color:rgb(0, 243, 207); font-size:18px;">
+            {% for message in messages %}
+            {{ message }}
+            {% endfor %}
+        </p>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+        </div>
+    </body>
+</html>

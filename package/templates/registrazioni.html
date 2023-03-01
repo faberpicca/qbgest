@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <table border="1">
+        <caption>
+            <h3> Registrazioni </h3>
+        </caption>
+        <thead>
+            <tr><th>Numero</th><th>Registro</th><th>Descrizione</th><th>Data contabile</th><th>Data fattura</th><th>Data scadenza</th><th>Partner</th><th>Validazione</th><th>Azione</th></tr>
+        </thead>
+        <tbody>
+        {% for r in registrazioni %}
+            <tr>
+                <td><a href="{{ url_for('registrazione', id=r.id) }}">{{ r.gegistro.codice + "A" + r.numero|formatnumero }}</td>
+                <td>{{ r.registro.nome }}</td>
+                <td>{{ r.descrizione }}</td>
+                <td>{{ r.data_contabile|formatdate }}</td>
+                <td>{{ r.data_decorrenza|formatdate }}</td>
+                <td>{{ r.data_scadenza|formatdate }}</td>
+                <td>{{ r.partner.nome }}</td>
+                {% if r.validazione != None %}
+                <td>{{ r.validazione.registrazione.nome }}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                <form method="POST" action="{{ url_for('rimuovi_registrazione', id=r.id) }}">
+                <td> <input type="submit" value="Rimuovi"></td>
+                </form>
+        {% endfor %}
+        <tr>
+            <td>Nuovo</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <form method="GET" action="{{ url_for('aggiungi_registrazione') }}">
+            <td> <input type="submit" value="Aggiungi"></td>
+            </form>
+        </tr>
+        </tbody>
+    </table>
+
+{% endblock %}
+

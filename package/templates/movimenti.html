@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <datalist id="partner_datalist">
+    {% for partner in partners %}
+    <option value="{{ partner.nome }}">
+    {% endfor %}
+    </datalist>
+
+    <form action="" method="post" novalidate>
+        {{ filtro_form.hidden_tag() }}
+        <table>
+          <tr>
+            <td> {{ filtro_form.dal.label }} <br> {{ filtro_form.dal(size=10) }} <br> {% for error in filtro_form.dal.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td> {{ filtro_form.al.label }} <br> {{ filtro_form.al(size=10) }} <br> {% for error in filtro_form.al.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td hidden> {{ filtro_form.tipo_data.label }} <br> {{ filtro_form.tipo_data }} <br> {% for error in filtro_form.tipo_data.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td> </td>
+            <td> {{ filtro_form.partner.label }} <br> {{ filtro_form.partner(size=30,list="partner_datalist",autocomplete="off") }} <br> {% for error in filtro_form.partner.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td hidden> {{ filtro_form.stato.label }} <br> {{ filtro_form.stato(size=30) }} <br> {% for error in filtro_form.stato.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td> </td>
+            <td hidden> {{ filtro_form.bozze.label }} <br> {{ filtro_form.bozze(size=10) }} <br> {% for error in filtro_form.bozze.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td> </td>
+            <td> {{ filtro_form.submit_filtro() }} </td>
+          </tr>
+        </table> 
+    </form>
+
+    </form>
+    <form method="GET" action="{{ url_for('stampa_mastrino_filtrato', id=conto.id)}}">
+    <input type="submit" value="Stampa">
+    </form>
+
+
+    <table border="1">
+        <caption>
+            <h3> {{ conto.nome }} </h3>
+        </caption>
+        <thead>
+            <tr><th>Descrizione</th><th>Data contabile</th><th>Partner</th><th>Dare</th><th>Avere</th><th>Origine</th></tr>
+        </thead>
+        <tbody>
+        {% for m in movimenti %}
+            <tr>
+                <td>{{ m.descrizione }}</td>
+                <td>{{ m.data_contabile|formatdate }}</td>
+                <td>{{ m.partner.nome }}</td>
+                {% if m.importo>=0 %}
+                <td align="right">{{ m.importo|formatimporto }}</td>
+                <td align="right">{{ 0|formatimporto }}</td>
+                {% else %}
+                <td align="right">{{ 0|formatimporto }}</td>
+                <td align="right">{{ -m.importo|formatimporto }}</td>
+                {% endif %}
+                {% if m.validazione != None %}
+                <td align="right"><a href="{{ url_for('registrazione', id=m.validazione.registrazione.id) }}">{{ m.validazione.registrazione.nome }}</a></td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                </form>
+        {% endfor %}
+        <tr>
+            <td>Totale</td>
+            <td></td>
+            <td></td>
+            <td align="right">{{ dare|formatimporto }}</td>
+            <td align="right">{{ avere|formatimporto }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Saldo</td>
+            <td></td>
+            <td></td>
+            {% if dare-avere >= 0 %}
+            <td align="right">{{ (dare-avere)|formatimporto }}</td>
+            <td></td>
+            {% else %}
+            <td></td>
+            <td align="right">{{ (avere-dare)|formatimporto }}</td>
+            {% endif %}
+            <td></td>
+        </tr>
+
+        </tbody>
+    </table>
+
+{% endblock %}
+
+

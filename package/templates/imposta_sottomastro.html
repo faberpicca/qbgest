@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Mastro <a href="{{ url_for('imposta_mastro', id=sottomastro.mastro.id) }}">{{ sottomastro.mastro.nome }}</a> sottomastro {{ sottomastro.nome }}</h3>
+
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+
+    <datalist id="mastri_datalist">
+    {% for mastro in mastri %}
+    <option value="{{ mastro.nome }}">
+    {% endfor %}
+    </datalist>
+
+        <table>
+          <tr>
+            <td {{ form.codice.label }} <br> {{ form.codice(size=5) }} <br> {% for error in form.codice.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.nome.label }} <br> {{ form.nome(size=40) }} <br> {% for error in form.nome.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.mastro.label }} <br> {{ form.mastro(size=40,list="mastri_datalist",autocomplete="off") }} <br> {% for error in form.mastro.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+          </tr>
+        </table>
+        <p>{{ form.submit() }}</p>
+    </form>
+
+    <table border="1">
+        <caption>
+            <h3>Conti</h3>
+        </caption>
+        <thead>
+            <tr><th>Codice</th><th>Nome</th><th>Azione</th></tr>
+        </thead>
+        <tbody>
+        {% for c in conti %}
+            <tr>
+                <td align="center">{{ c.sottomastro.mastro.codice|format2+"."+c.sottomastro.codice|format2+"."+c.codice|format3 }}</td>
+                <td><a href="{{ url_for('imposta_conto', id=c.id) }}">{{ c.nome }}</a></td>
+                <form method="GET" action="{{ url_for('rimuovi_conto', id=c.id) }}">
+                <td> <input type="submit" value="Rimuovi"></td>
+                </form>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <form method="GET" action="{{ url_for('aggiungi_conto', id=sottomastro.id) }}">
+    <td> <input type="submit" value="Aggiungi"></td>
+    </form>
+
+{% endblock %}

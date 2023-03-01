@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <table border="1">
+        <caption>
+            <h3>Imposte</h3>
+        </caption>
+        <thead>
+            <tr><th>Posizione</th><th>Imposta</th><th>Azione</th></tr>
+        </thead>
+        <tbody>
+        {% for i in imposte %}
+            <tr>
+                <td>{{ i.posizione }}</td>
+                <td><a href="{{ url_for('imposta_imposta', id=i.id) }}">{{ i.nome }}</a></td>
+                <form method="GET" action="{{ url_for('rimuovi_imposta', id=i.id) }}">
+                <td> <input type="submit" value="Rimuovi"></td>
+                </form>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <form method="GET" action="{{ url_for('aggiungi_imposta') }}">
+    <td> <input type="submit" value="Aggiungi"></td>
+    </form>
+
+{% endblock %}
+

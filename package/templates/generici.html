@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <datalist id="partner_datalist">
+    {% for partner in partners %}
+    <option value="{{ partner.nome }}">
+    {% endfor %}
+    </datalist>
+
+    <form action="" method="post" novalidate>
+        {{ filtro_form.hidden_tag() }}
+        <table>
+          <tr>
+            <td> {{ filtro_form.dal.label }} <br> {{ filtro_form.dal(size=10) }} <br> {% for error in filtro_form.dal.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td> {{ filtro_form.al.label }} <br> {{ filtro_form.al(size=10) }} <br> {% for error in filtro_form.al.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td hidden> {{ filtro_form.tipo_data.label }} <br> {{ filtro_form.tipo_data }} <br> {% for error in filtro_form.tipo_data.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td> </td>
+            <td> {{ filtro_form.partner.label }} <br> {{ filtro_form.partner(size=30,list="partner_datalist",autocomplete="off") }} <br> {% for error in filtro_form.partner.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td hidden> {{ filtro_form.stato.label }} <br> {{ filtro_form.stato(size=30) }} <br> {% for error in filtro_form.stato.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td> </td>
+            <td> {{ filtro_form.bozze.label }} <br> {{ filtro_form.bozze(size=10) }} <br> {% for error in filtro_form.bozze.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td> </td>
+            <td> {{ filtro_form.submit_filtro() }} </td>
+          </tr>
+        </table> 
+    </form>
+
+    <table border="1">
+        <caption>
+            <h3> {{ registro.nome }} </h3>
+        </caption>
+        <thead>
+            <tr><th>Numero</th><th>Data contabile</th><th>Partner</th><th>Descrizione</th><th>Origine</th><th>Azione</th></tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <form method="GET" action="{{ url_for('aggiungi_registrazione', id=registro.id) }}">
+            <td> <input type="submit" value="Aggiungi"></td>
+            </form>
+        </tr>
+
+        {% for r in registrazioni %}
+            <tr>
+                <td><a href="{{ url_for('registrazione', id=r.id) }}">{{ r.nome }}</a></td>
+                <td>{{ r.data_contabile|formatdate }}</td>
+                <td><a href="{{ url_for('partner', id=r.partner.id) }}">{{ r.partner.nome }}</a></td>
+                <td>{{ r.descrizione }}</td>
+                {% if r.validazione != None %}
+                <td><a href="{{ url_for('registrazione', id=r.validazione.registrazione.id) }}">{{ r.validazione.registrazione.nome }}</a></td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% if r.validazione_backref.first() == None %}
+                <form method="POST" action="{{ url_for('rimuovi_registrazione', id=r.id) }}">
+                <td> <input type="submit" value="Rimuovi"></td>
+                {% else %}
+                <form method="GET" action="{{ url_for('duplica_registrazione', id=r.id) }}">
+                <td> <input type="submit" value="Duplica"></td>
+                {% endif %}
+                </form>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+

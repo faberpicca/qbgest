@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h3><a href="{{ url_for('stampe', id=stampa.registro_stampa.id) }}">{{ stampa.registro_stampa.nome }}</a></h3>
+
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+
+        <table>
+          <tr>
+            <td {{ form.nome.label }} <br> {{ form.nome(size=40) }} <br> {% for error in form.nome.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.data_decorrenza.label }} <br> {{ form.data_decorrenza(size=10) }} <br> {% for error in form.data_decorrenza.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.data_scadenza.label }} <br> {{ form.data_scadenza(size=10) }} <br> {% for error in form.data_scadenza.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.anno_stampa.label }} <br> {{ form.anno_stampa(size=10) }} <br> {% for error in form.anno_stampa.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.precedente_pagina_stampa.label }} <br> {{ form.precedente_pagina_stampa(size=10) }} <br> {% for error in form.precedente_pagina_stampa.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td {{ form.precedente_riga_stampa.label }} <br> {{ form.precedente_riga_stampa(size=10) }} <br> {% for error in form.precedente_riga_stampa.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+          </tr>
+        </table>
+        {% if allegati == [] %}
+            <p>{{ form.submit() }}</p>
+        {% endif %}
+    </form>
+
+    <table>
+        <tbody>
+        {% for a in allegati %}
+            <tr>
+                <td><a href="{{ url_for('download_file', id=a.id) }}">{{ a.nome }}</a></td>
+                <form method="POST" action="{{ url_for('rimuovi_allegato_stampa', id=a.id) }}">
+                <td> <input type="submit" value="Rimuovi"></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <table border="1">
+        <caption>
+            <h3>Registri dal {{ inizio|formatdate }}</h3>
+        </caption>
+        <thead>
+            <tr><th>Nome</th><th>Codice</th><th>Tipo</th><th>Totale</th><th>Saldo</th><th>Azione</th></tr>
+        </thead>
+        <tbody>
+        {% for i in range(registri|length) %}
+            <tr>
+                <td><a href="{{ url_for('registrazioni', id=registri[i].id) }}">{{ registri[i].nome }}</a></td>
+                <td>{{ registri[i].codice }}</td>
+                <td>{{ registri[i].categoria }}</td>
+                {% if registri[i].categoria!="IVA" %}
+                <td align="right">{{ totale[i]|formatimporto }}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                <td align="right">{{ saldo[i]|formatimporto }}</td>
+                </form>
+                <form method="GET" action="{{ url_for('stampa_registro', id=registri[i].id)}}">
+                <td> <input type="submit" value="Stampa"></td>
+                </form>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+

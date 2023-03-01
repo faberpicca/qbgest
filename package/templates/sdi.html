@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+    <table border="1">
+        <caption>
+            <h3>{{ record_sdi.nome }}</h3>
+        </caption>
+        <thead>
+            <tr><th>Fattura</th><th>File</th><th>Azione</th><th>Azione</th></tr>
+        </thead>
+        <tbody>
+        {% for a in record_sdi.allegato %}
+            <tr>
+                <td><a href="{{ url_for('registrazione', id=record_sdi.registrazione.id) }}">{{ record_sdi.registrazione.nome }}</td>
+                <td><a href="{{ url_for('download_file', id=a.id) }}">{{ a.nome }}</a></td>
+                {% if record_sdi.sent or record_sdi.inbox %}
+                <td></td>
+                <td></td>
+                {% else %}
+                <form method="POST" action="{{ url_for('rimuovi_allegato_sdi', id=a.id) }}">
+                <td> <input type="submit" value="Rimuovi"></td>
+                </form>
+                <form method="POST" action="{{ url_for('invia_fattura_sdi', id=a.id) }}">
+                <td> <input type="submit" value="Invia"></td>
+                </form>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+<br>
+
+{% if not record_sdi.sent and not record_sdi.inbox %}
+    <form action="" method="post" enctype="multipart/form-data">
+        {{ upload_form.hidden_tag() }}
+
+        <table>
+          <tr>
+            <td> {{ upload_form.file.label }} <br> {{ upload_form.file() }} <br> {% for error in upload_form.file.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
+            <td valign="bottom"> {{ upload_form.submit2() }} </td>
+          </tr>
+        </table> 
+    </form>
+{% endif %}
+
+
+{% endblock %}
+
