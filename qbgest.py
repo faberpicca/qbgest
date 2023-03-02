@@ -21,4 +21,4 @@ If not, see <http://www.gnu.org/licenses/>.
 from package import app
 
 if __name__ == '__main__':
-    app.run(debug = False)
+    app.run(debug = True)

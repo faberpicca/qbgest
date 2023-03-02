@@ -69,8 +69,8 @@ class ImpostazioniForm(FlaskForm):
     registro_riconciliazione_rc = StringField('Registro riconciliazione reverse charge', [registro_check])
     registro_riconciliazione_sp = StringField('Registro riconciliazione split payment', [registro_check])
     #starting_date = db.Column(db.Date)# da attivare
-    starting_date = DateField('Data ultima apertura conti',format='%d/%m/%Y',validators=[Optional()])
-    #starting_date = DateField('Data ultima apertura conti',validators=[Optional()])
+    #starting_date = DateField('Data ultima apertura conti',format='%d/%m/%Y',validators=[Optional()])
+    starting_date = DateField('Data ultima apertura conti',validators=[Optional()])
     imap_server = StringField('Server IMAP')
     imap_user = StringField('Username IMAP')
     imap_pwd = StringField('Password IMAP')
@@ -90,9 +90,9 @@ class ImpostazioniForm(FlaskForm):
 class FatturaForm(FlaskForm):
     descrizione = StringField('Descrizione', validators=[InputRequired()])
     numero_origine = StringField('Numero di origine', filters = [lambda x: x or None])#se non viene compilato il campo restituisce None e non ""
-    data_contabile = DateField('Data contabile',format='%d/%m/%Y',validators=[Optional()])
-    data_decorrenza = DateField('Data emissione',format='%d/%m/%Y',validators=[Optional()])
-    data_scadenza = DateField('Data scadenza',format='%d/%m/%Y',validators=[Optional()])
+    data_contabile = DateField('Data contabile',validators=[Optional()])
+    data_decorrenza = DateField('Data emissione',validators=[Optional()])
+    data_scadenza = DateField('Data scadenza',validators=[Optional()])
     note = TextAreaField('Note', render_kw={"rows": 1, "cols": 120})
     partner = StringField('Partner', [partner_check])
     lav_autonomo = BooleanField('Lav. autonomo')
@@ -144,9 +144,9 @@ class VoceRicevutaForm(FlaskForm):
 
 class IVAForm(FlaskForm):
     descrizione = StringField('Descrizione', validators=[InputRequired()])
-    data_contabile = DateField('Data contabile',format='%d/%m/%Y',validators=[Optional()])
-    data_decorrenza = DateField('Data inizio',format='%d/%m/%Y',validators=[Optional()])
-    data_scadenza = DateField('Data fine',format='%d/%m/%Y',validators=[Optional()])
+    data_contabile = DateField('Data contabile',validators=[Optional()])
+    data_decorrenza = DateField('Data inizio',validators=[Optional()])
+    data_scadenza = DateField('Data fine',validators=[Optional()])
     note = TextAreaField('Note', render_kw={"rows": 1, "cols": 120})
     partner = StringField('Partner', [partner_check])
     submit = SubmitField('Salva')
@@ -163,7 +163,7 @@ class EditIVAForm(FlaskForm):
 
 class CassaForm(FlaskForm):
     descrizione = StringField('Descrizione', validators=[InputRequired()])
-    data_contabile = DateField('Data contabile',format='%d/%m/%Y',validators=[Optional()])
+    data_contabile = DateField('Data contabile',validators=[Optional()])
     partner = StringField('Partner o domiciliatario')
     importo = FlexibleDecimalField('Importo', validators=[InputRequired()], places=None)
     submit = SubmitField('Salva')
@@ -182,7 +182,7 @@ class VoceCassaForm(FlaskForm):
 
 class GenericoForm(FlaskForm):
     descrizione = StringField('Descrizione', validators=[InputRequired()])
-    data_contabile = DateField('Data contabile',format='%d/%m/%Y',validators=[Optional()])
+    data_contabile = DateField('Data contabile',validators=[Optional()])
     partner = StringField('Partner')
     submit = SubmitField('Salva')
 
@@ -288,8 +288,8 @@ class RegistroForm(FlaskForm):
             raise ValidationError("Categorie ammesse: Fattura, Cassa, Generico, Ricevuta, IVA")
 
 class FiltroForm(FlaskForm):
-    dal = DateField('Dal',format='%d/%m/%Y',validators=[Optional()])
-    al = DateField('Al',format='%d/%m/%Y',validators=[Optional()])
+    dal = DateField('Dal',validators=[Optional()])
+    al = DateField('Al',validators=[Optional()])
     tipo_data = RadioField('', choices=[('data_contabile', 'Data contabile'), ('data_decorrenza', 'Data emissione'), ('data_scadenza', 'Data scadenza')])
     partner = StringField('Partner o domiciliatario', [partner_check_allow_empty])
     stato = RadioField('', choices=[('tutte', 'Tutte'), ('insolute', 'Insolute')])
@@ -305,7 +305,7 @@ class UploadForm(FlaskForm):
     submit2 = SubmitField('Upload')#ho dovuto mettere un nome diverso per avere due forms nella stessa pagine
 
 class ConfermaForm(FlaskForm):
-    data_delibera = DateField('Data contabile',format='%d/%m/%Y')
+    data_delibera = DateField('Data contabile')
     submit = SubmitField('Conferma')
 
 class RegistroStampaForm(FlaskForm):
@@ -320,8 +320,8 @@ class RegistroStampaForm(FlaskForm):
 
 class StampaForm(FlaskForm):
     nome = StringField('Descrizione', validators=[InputRequired()])
-    data_decorrenza = DateField('Data decorrenza',format='%d/%m/%Y',validators=[Optional()])
-    data_scadenza = DateField('Data scadenza',format='%d/%m/%Y',validators=[Optional()])
+    data_decorrenza = DateField('Data decorrenza',validators=[Optional()])
+    data_scadenza = DateField('Data scadenza',validators=[Optional()])
     anno_stampa = IntegerField('Anno di stampa')
     precedente_pagina_stampa = IntegerField('Pagina precedente')
     precedente_riga_stampa = IntegerField('Riga precedente')
