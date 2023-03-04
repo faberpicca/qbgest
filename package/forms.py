@@ -118,17 +118,12 @@ class VoceFatturaForm(FlaskForm):
     descrizione = StringField('Descrizione', validators=[InputRequired()])
     quantita = FlexibleDecimalField('Quantità', validators=[InputRequired()], places=None)
     esercizio_precedente = BooleanField('Esercizio precedente')
-    esercizio = StringField('Esercizio di pertinenza')
     importo = FlexibleDecimalField('Importo', validators=[InputRequired()], places=None)
     registrazione = StringField('Registrazione')
     conto = StringField('Conto', [conto_check])
     imposta = StringField('Imposta')
     ritenuta = StringField('Ritenuta')
     submit = SubmitField('Salva')
-
-    def validate_esercizio(self, esercizio):
-        if esercizio.data not in ["", "Precedente", "Successivo"]:
-            raise ValidationError("Valore ammesso: campo vuoto, Precedente, Successivo")
 
     def validate_imposta(self, imposta):
         #print(self.imposta)
