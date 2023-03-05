@@ -1,6 +1,6 @@
 # QBGest
 
-QBGest è un software open source pensato per la gestione della contabilità di una piccola azienda, prende spunto dai software Odoo ed Esatto coniugando quelli che sono a mio avviso i loro punti di forza. Come dice il suo stesso nome QB="Quanto Basta" il software è di impronta minimalista ed essenziale, ma fa comunque tutto quello che serve. Viene utilizzato ormai da un anno per gestire la contabilità di una piccola azienda e ha raggiunto un buon grado di maturità. Ho ritenuto quindi opportuno condividere con la comunità open source sia il software, che le nozioni che ho appreso/sviluppato nella speranza che possa essere di aiuto per qualcuno.
+QBGest è un software open source pensato per la gestione della contabilità di una piccola azienda, prende spunto dai software Odoo ed Esatto coniugando quelli che sono a mio avviso i loro punti di forza. Come dice il suo stesso nome QB="Quanto Basta" il software è di impronta minimalista ed essenziale, ma fa comunque tutto quello che serve. Viene utilizzato ormai da due anni per gestire la contabilità di una piccola azienda e ha raggiunto un buon grado di maturità. Ho ritenuto quindi opportuno condividere con la comunità open source sia il software, che le nozioni che ho appreso/sviluppato nella speranza che possa essere di aiuto per qualcuno.
 
 QBGest è di tipo web based quindi utilizzabile con un normale browser web, è scritto in Python e utilizza il framework Flask e il database PostgreSQL.
 
@@ -12,4 +12,4 @@ Le registrazioni possono essere annullate, e tornare quindi in fase di bozza per
 
 Altra caratteristica è la capacità di gestire in automatico e con semplicità la numerazione delle registrazioni, senza vincoli troppo rigidi, ma garantendo comunque la corretta numerazione.
 
-ALtre informazioni si possono trovare nella pagina web di [QBGest](https://www.centu.it/qbgest)
+Altre informazioni si possono trovare nella pagina web di [QBGest](https://www.centu.it/qbgest)
