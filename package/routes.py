@@ -741,7 +741,7 @@ def aggiungi_riconciliazione(id):# nella registrazione di tipo cassa o generico 
 def download_file(id):#offre il file in download
     file=Allegato.query.get(id)
     #print(file.nome)
-    return send_file(io.BytesIO(file.binario),as_attachment=True,attachment_filename=file.nome)#,mimetype='application/pdf')
+    return send_file(io.BytesIO(file.binario),as_attachment=True,download_name=file.nome)#,mimetype='application/pdf')
     
 @app.route('/anagrafica', methods=['GET', 'POST'])
 @login_required
@@ -1683,7 +1683,7 @@ def stampa_registro(id):
     al=None
     filename=os.path.join(here, 'stampa.pdf')
     Stampa_registri(partner,dal,al,registri,filename,1,"")
-    return send_file(filename,as_attachment=True,attachment_filename=registri[0].nome+".pdf")
+    return send_file(filename,as_attachment=True,download_name=registri[0].nome+".pdf")
 
 def Stampa_registri(partner,dal,al,registri,filename,page,year):
     tab=[[40,"l"],[110,"l"],[260,"l"],[460,"l"],[738,"r"],[800,"r"]]
@@ -1866,7 +1866,7 @@ def stampa_mastrino(id):
     conti=[Conto.query.get(id)]
     filename=os.path.join(here, 'stampa.pdf')
     Stampa_libro_mastro(partner,dal,al,conti,filename)
-    return send_file(filename,as_attachment=True,attachment_filename=conti[0].nome+".pdf")
+    return send_file(filename,as_attachment=True,download_name=conti[0].nome+".pdf")
 
 @app.route('/stampa_mastrino_filtrato/<id>')
 @login_required
@@ -1879,7 +1879,7 @@ def stampa_mastrino_filtrato(id):
     conti=[Conto.query.get(id)]
     filename=os.path.join(here, 'stampa.pdf')
     Stampa_libro_mastro(partner,dal,al,conti,filename)
-    return send_file(filename,as_attachment=True,attachment_filename=conti[0].nome+".pdf")
+    return send_file(filename,as_attachment=True,download_name=conti[0].nome+".pdf")
 
 def Stampa_partitario_singolo(stampa):
     tab=[[40,"l"],[330,"l"],[380,"l"],[485,"r"],[550,"r"],[105,"l"],[280,"l"]]
