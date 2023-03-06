@@ -1,0 +1,59 @@
+**************
+Queste istruzioni sono state testate su ambiente Linux Debian 11 "bullseye", per chi ha un minimo di competenza non sarà comunque difficile adattare l'installazione a qualsiasi sistema operativo (linux. windows, mac).
+
+**************
+
+
+scaricare qbgest da github e scompattare nella home directory
+troveremo quindi la directory qbgest-main/
+
+aprire il terminale e diventare root
+su - root
+
+installare i pacchetti necessari
+apt-get install git virtualenv postgresql libpq-dev python3-dev build-essential
+
+entrare nell'ambiente postgresql come utente postgres
+su postgres
+psql
+
+creare utenete qbgest e assegnargli i privilegi necessari
+CREATE USER qbgest PASSWORD 'secret';
+ALTER ROLE qbgest WITH LOGIN;
+ALTER ROLE qbgest CREATEDB;
+
+uscire dall'ambiente postgresql
+\q
+
+entrare nell'ambiente postgresql come utente qbgest
+psql -h localhost -d postgres -U qbgest
+
+creare il database qbgestdb
+create database qbgestdb;
+
+uscire dall'ambiente postgresql
+\q
+
+popolare il database
+psql -h localhost -d qbgestdb -U qbgest < qbgest-main/qbgest_db.txt
+
+creare l'ambiente virtuale di python
+virtualenv -p python3 venv
+
+attivare l'ambiente virtuale
+source venv/bin/activate
+
+installare i pacchetti python necessari
+pip install -r qbgest-main/requirements.txt --upgrade
+
+lanciare qbgest
+python qbgest-main/qbgest.py
+
+aprire il browser e sulla barra di navigazione digitare 
+localhost:5000
+
+user demo
+password demo
+
+per interrommpere l'esecuzione ctrl+c
+
