@@ -29,7 +29,6 @@ CREATE TABLE public.alembic_version (
 );
 
 
-ALTER TABLE public.alembic_version OWNER TO user1;
 
 --
 -- Name: allegato; Type: TABLE; Schema: public; Owner: user1
@@ -46,7 +45,6 @@ CREATE TABLE public.allegato (
 );
 
 
-ALTER TABLE public.allegato OWNER TO user1;
 
 --
 -- Name: allegato_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -60,7 +58,6 @@ CREATE SEQUENCE public.allegato_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.allegato_id_seq OWNER TO user1;
 
 --
 -- Name: allegato_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -82,7 +79,6 @@ CREATE TABLE public.conto (
 );
 
 
-ALTER TABLE public.conto OWNER TO user1;
 
 --
 -- Name: conto_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -96,7 +92,6 @@ CREATE SEQUENCE public.conto_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.conto_id_seq OWNER TO user1;
 
 --
 -- Name: conto_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -116,7 +111,6 @@ CREATE TABLE public.filtro_conto (
 );
 
 
-ALTER TABLE public.filtro_conto OWNER TO user1;
 
 --
 -- Name: filtro_conto_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -130,7 +124,6 @@ CREATE SEQUENCE public.filtro_conto_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.filtro_conto_id_seq OWNER TO user1;
 
 --
 -- Name: filtro_conto_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -150,7 +143,6 @@ CREATE TABLE public.filtro_estratto_conto (
 );
 
 
-ALTER TABLE public.filtro_estratto_conto OWNER TO user1;
 
 --
 -- Name: filtro_estratto_conto_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -164,7 +156,6 @@ CREATE SEQUENCE public.filtro_estratto_conto_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.filtro_estratto_conto_id_seq OWNER TO user1;
 
 --
 -- Name: filtro_estratto_conto_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -184,7 +175,6 @@ CREATE TABLE public.filtro_registrazione (
 );
 
 
-ALTER TABLE public.filtro_registrazione OWNER TO user1;
 
 --
 -- Name: filtro_registrazione_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -198,7 +188,6 @@ CREATE SEQUENCE public.filtro_registrazione_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.filtro_registrazione_id_seq OWNER TO user1;
 
 --
 -- Name: filtro_registrazione_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -218,7 +207,6 @@ CREATE TABLE public.filtro_registro (
 );
 
 
-ALTER TABLE public.filtro_registro OWNER TO user1;
 
 --
 -- Name: filtro_registro_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -232,7 +220,6 @@ CREATE SEQUENCE public.filtro_registro_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.filtro_registro_id_seq OWNER TO user1;
 
 --
 -- Name: filtro_registro_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -259,7 +246,6 @@ CREATE TABLE public.imposta (
 );
 
 
-ALTER TABLE public.imposta OWNER TO user1;
 
 --
 -- Name: imposta_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -273,7 +259,6 @@ CREATE SEQUENCE public.imposta_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.imposta_id_seq OWNER TO user1;
 
 --
 -- Name: imposta_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -316,7 +301,6 @@ CREATE TABLE public.impostazioni (
 );
 
 
-ALTER TABLE public.impostazioni OWNER TO user1;
 
 --
 -- Name: impostazioni_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -330,7 +314,6 @@ CREATE SEQUENCE public.impostazioni_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.impostazioni_id_seq OWNER TO user1;
 
 --
 -- Name: impostazioni_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -351,7 +334,6 @@ CREATE TABLE public.log (
 );
 
 
-ALTER TABLE public.log OWNER TO user1;
 
 --
 -- Name: log_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -365,7 +347,6 @@ CREATE SEQUENCE public.log_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.log_id_seq OWNER TO user1;
 
 --
 -- Name: log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -386,7 +367,6 @@ CREATE TABLE public.mastro (
 );
 
 
-ALTER TABLE public.mastro OWNER TO user1;
 
 --
 -- Name: mastro_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -400,7 +380,6 @@ CREATE SEQUENCE public.mastro_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.mastro_id_seq OWNER TO user1;
 
 --
 -- Name: mastro_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -425,7 +404,6 @@ CREATE TABLE public.movimento (
 );
 
 
-ALTER TABLE public.movimento OWNER TO user1;
 
 --
 -- Name: movimento_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -439,7 +417,6 @@ CREATE SEQUENCE public.movimento_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.movimento_id_seq OWNER TO user1;
 
 --
 -- Name: movimento_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -461,7 +438,6 @@ CREATE TABLE public.pagamento (
 );
 
 
-ALTER TABLE public.pagamento OWNER TO user1;
 
 --
 -- Name: pagamento_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -475,7 +451,6 @@ CREATE SEQUENCE public.pagamento_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.pagamento_id_seq OWNER TO user1;
 
 --
 -- Name: pagamento_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -519,7 +494,6 @@ CREATE TABLE public.partner (
 );
 
 
-ALTER TABLE public.partner OWNER TO user1;
 
 --
 -- Name: partner_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -533,7 +507,6 @@ CREATE SEQUENCE public.partner_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.partner_id_seq OWNER TO user1;
 
 --
 -- Name: partner_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -570,7 +543,6 @@ CREATE TABLE public.registrazione (
 );
 
 
-ALTER TABLE public.registrazione OWNER TO user1;
 
 --
 -- Name: registrazione_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -584,7 +556,6 @@ CREATE SEQUENCE public.registrazione_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.registrazione_id_seq OWNER TO user1;
 
 --
 -- Name: registrazione_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -611,7 +582,6 @@ CREATE TABLE public.registro (
 );
 
 
-ALTER TABLE public.registro OWNER TO user1;
 
 --
 -- Name: registro_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -625,7 +595,6 @@ CREATE SEQUENCE public.registro_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.registro_id_seq OWNER TO user1;
 
 --
 -- Name: registro_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -646,7 +615,6 @@ CREATE TABLE public.registro_stampa (
 );
 
 
-ALTER TABLE public.registro_stampa OWNER TO user1;
 
 --
 -- Name: registro_stampa_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -660,7 +628,6 @@ CREATE SEQUENCE public.registro_stampa_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.registro_stampa_id_seq OWNER TO user1;
 
 --
 -- Name: registro_stampa_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -681,7 +648,6 @@ CREATE TABLE public.riconciliazione (
 );
 
 
-ALTER TABLE public.riconciliazione OWNER TO user1;
 
 --
 -- Name: riconciliazione_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -695,7 +661,6 @@ CREATE SEQUENCE public.riconciliazione_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.riconciliazione_id_seq OWNER TO user1;
 
 --
 -- Name: riconciliazione_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -717,7 +682,6 @@ CREATE TABLE public.ritenuta (
 );
 
 
-ALTER TABLE public.ritenuta OWNER TO user1;
 
 --
 -- Name: ritenuta_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -731,7 +695,6 @@ CREATE SEQUENCE public.ritenuta_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.ritenuta_id_seq OWNER TO user1;
 
 --
 -- Name: ritenuta_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -755,7 +718,6 @@ CREATE TABLE public.sdi (
 );
 
 
-ALTER TABLE public.sdi OWNER TO user1;
 
 --
 -- Name: sdi_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -769,7 +731,6 @@ CREATE SEQUENCE public.sdi_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.sdi_id_seq OWNER TO user1;
 
 --
 -- Name: sdi_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -790,7 +751,6 @@ CREATE TABLE public.sottomastro (
 );
 
 
-ALTER TABLE public.sottomastro OWNER TO user1;
 
 --
 -- Name: sottomastro_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -804,7 +764,6 @@ CREATE SEQUENCE public.sottomastro_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.sottomastro_id_seq OWNER TO user1;
 
 --
 -- Name: sottomastro_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -837,7 +796,6 @@ CREATE TABLE public.stampa (
 );
 
 
-ALTER TABLE public.stampa OWNER TO user1;
 
 --
 -- Name: stampa_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -851,7 +809,6 @@ CREATE SEQUENCE public.stampa_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.stampa_id_seq OWNER TO user1;
 
 --
 -- Name: stampa_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -872,7 +829,6 @@ CREATE TABLE public.tipo_documento (
 );
 
 
-ALTER TABLE public.tipo_documento OWNER TO user1;
 
 --
 -- Name: tipo_documento_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -886,7 +842,6 @@ CREATE SEQUENCE public.tipo_documento_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tipo_documento_id_seq OWNER TO user1;
 
 --
 -- Name: tipo_documento_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -920,7 +875,6 @@ CREATE TABLE public."user" (
 );
 
 
-ALTER TABLE public."user" OWNER TO user1;
 
 --
 -- Name: user_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -934,7 +888,6 @@ CREATE SEQUENCE public.user_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.user_id_seq OWNER TO user1;
 
 --
 -- Name: user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -953,7 +906,6 @@ CREATE TABLE public.validazione (
 );
 
 
-ALTER TABLE public.validazione OWNER TO user1;
 
 --
 -- Name: validazione_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -967,7 +919,6 @@ CREATE SEQUENCE public.validazione_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.validazione_id_seq OWNER TO user1;
 
 --
 -- Name: validazione_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -996,7 +947,6 @@ CREATE TABLE public.voce (
 );
 
 
-ALTER TABLE public.voce OWNER TO user1;
 
 --
 -- Name: voce_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -1010,7 +960,6 @@ CREATE SEQUENCE public.voce_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.voce_id_seq OWNER TO user1;
 
 --
 -- Name: voce_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -1032,7 +981,6 @@ CREATE TABLE public.voce_iva (
 );
 
 
-ALTER TABLE public.voce_iva OWNER TO user1;
 
 --
 -- Name: voce_iva_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -1046,7 +994,6 @@ CREATE SEQUENCE public.voce_iva_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.voce_iva_id_seq OWNER TO user1;
 
 --
 -- Name: voce_iva_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
@@ -1068,7 +1015,6 @@ CREATE TABLE public.voce_ritenuta (
 );
 
 
-ALTER TABLE public.voce_ritenuta OWNER TO user1;
 
 --
 -- Name: voce_ritenuta_id_seq; Type: SEQUENCE; Schema: public; Owner: user1
@@ -1082,7 +1028,6 @@ CREATE SEQUENCE public.voce_ritenuta_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.voce_ritenuta_id_seq OWNER TO user1;
 
 --
 -- Name: voce_ritenuta_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user1
