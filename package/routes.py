@@ -3543,6 +3543,7 @@ def impostazioni():
 
 @app.route('/imposta_mastri')
 @login_required
+@requires_roles('admin')
 def imposta_mastri():
     mastri = Mastro.query.order_by(Mastro.codice).all()
     return render_template('imposta_mastri.html', mastri=mastri)
@@ -3556,6 +3557,7 @@ def log():
 
 @app.route('/imposta_mastro/<id>', methods=['GET', 'POST'])
 @login_required
+@requires_roles('admin')
 def imposta_mastro(id):
     mastro=Mastro.query.get(id)
     sottomastri=Sottomastro.query.filter_by(mastro=mastro).order_by(Sottomastro.codice).all()
@@ -3595,6 +3597,7 @@ def rimuovi_mastro(id):
 
 @app.route('/imposta_sottomastro/<id>', methods=['GET', 'POST'])
 @login_required
+@requires_roles('admin')
 def imposta_sottomastro(id):
     sottomastro=Sottomastro.query.get(id)
     conti=Conto.query.filter_by(sottomastro=sottomastro).order_by(Conto.codice).all()
@@ -3637,6 +3640,7 @@ def rimuovi_sottomastro(id):
 
 @app.route('/imposta_conto/<id>', methods=['GET', 'POST'])
 @login_required
+@requires_roles('admin')
 def imposta_conto(id):
     conto=Conto.query.get(id)
     form = ContoForm()
@@ -3745,6 +3749,7 @@ def imposta_imposte():
 
 @app.route('/imposta_imposta/<id>', methods=['GET', 'POST'])
 @login_required
+@requires_roles('admin')
 def imposta_imposta(id):
     imposta=Imposta.query.get(id)
     form = ImpostaForm()
@@ -3801,6 +3806,7 @@ def imposta_ritenute():
 
 @app.route('/imposta_ritenuta/<id>', methods=['GET', 'POST'])
 @login_required
+@requires_roles('admin')
 def imposta_ritenuta(id):
     ritenuta=Ritenuta.query.get(id)
     form = RitenutaForm()
