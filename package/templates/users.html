@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <table border="1">
+        <caption>
+            <h3>Utenti</h3>
+        </caption>
+        <thead>
+            <tr><th>Username</th><th>email</th><th>Ruolo</th></tr>
+        </thead>
+        <tbody>
+        {% for u in users %}
+            <tr>
+                <td><a href="{{ url_for('imposta_utente', id=u.id) }}">{{ u.username }}</a></td>
+                <td>{{ u.email }}</td>
+                <td>{{ u.ruolo }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+<br>
+    <form method="POST" action="{{ url_for('register') }}">
+    <td> <input type="submit" value="Aggiungi utente"></td>
+    </form>
+
+
+{% endblock %}

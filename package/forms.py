@@ -36,6 +36,21 @@ class RegistrationForm(FlaskForm):
         if user is not None:
             raise ValidationError('Please use a different email address.')
 
+class PasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Salva')
+
+class UserForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    ruolo = StringField('Ruolo')
+    submit = SubmitField('Salva')
+
+    def validate_ruolo(self, ruolo):
+        if ruolo.data !=None and ruolo.data not in ["user", "admin"]:
+            raise ValidationError("Ruolo ammesso: user, admin")
+
 def partner_check(form, field):
     partner = Partner.query.filter_by(nome=field.data).first()
     if partner is None:
@@ -235,7 +250,7 @@ class ImpostaForm(FlaskForm):
 
     def validate_natura(self, natura):
         #print(natura.data)
-        if natura.data not in ["", "N1", "N2", "N3", "N4", "N5", "N6", "N6.8", "N7"]:
+        if natura.data !=None and natura.data not in ["N1", "N2", "N3", "N4", "N5", "N6", "N6.8", "N7"]:
             raise ValidationError("Natura ammessa: campo vuoto, N1, N2, N3, N4, N5, N6, N6.8, N7")
 
     def validate_esigibilita(self, esigibilita):

@@ -148,6 +148,13 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+@app.route('/imposta_utenti')
+@requires_roles('admin')
+@login_required
+def imposta_utenti():
+    users=User.query.order_by(User.id).all()
+    return render_template ("users.html", users=users)
+
 @app.route('/register', methods=['GET', 'POST'])
 @login_required
 @requires_roles('admin')
@@ -159,8 +166,60 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash("L'utente e' stato aggiunto")
-        return redirect(url_for('index'))
+        return redirect(url_for('imposta_utenti'))
     return render_template('register.html', title='Register', form=form)
+
+@app.route('/imposta_utente/<id>', methods=['GET', 'POST'])
+@requires_roles('admin')
+@login_required
+def imposta_utente(id):
+    user=User.query.get(id)
+    form = UserForm()
+    if form.submit.data and form.validate():
+        if user!=current_user or form.ruolo.data == "admin":
+            user.username = form.username.data
+            user.email=form.email.data
+            user.ruolo=form.ruolo.data
+            db.session.commit()
+            flash("L'utente e' stato aggiornato")
+        else:
+            flash("Non è possibile rimuovere i propri privilegi di amministratore")
+        return redirect(url_for('imposta_utenti'))
+    if form.is_submitted() and not form.validate():pass
+    else:
+        form.username.data=user.username
+        form.email.data=user.email
+        form.ruolo.data=user.ruolo
+    return render_template ("set_user.html", form=form, user=user)
+
+@app.route('/delete_account/<id>', methods=['GET', 'POST'])
+@requires_roles('admin')
+@login_required
+def delete_account(id):#rimuove l'account da root
+    user=User.query.get(id)
+    form = ConfermaForm()
+    if form.validate_on_submit():
+        if user!=current_user:
+            flash("L'account "+user.username+" è stato rimosso")
+            db.session.delete(user)
+            db.session.commit()
+        else:
+            flash("Non è possibile rimuovere il proprio account di amministratore")
+        return redirect(url_for('imposta_utenti'))
+    return render_template('conferma.html', testo="Confermi la rimozione dell'account "+user.username+" ? ", form=form)
+
+@app.route('/change_password/<id>', methods=['GET', 'POST'])
+@requires_roles('admin')
+@login_required
+def change_password(id):
+    user=User.query.get(id)
+    form = PasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash("La password e' stata aggiornata")
+        return redirect(url_for('imposta_utenti'))
+    return render_template('password.html', title='Cambia la password', form=form, user=user)
 
 @app.route('/modifica_data', methods=['GET', 'POST'])
 @login_required
