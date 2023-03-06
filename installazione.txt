@@ -25,6 +25,12 @@ ALTER ROLE qbgest CREATEDB;
 uscire dall'ambiente postgresql
 \q
 
+uscire dal ruolo di postgres
+exit
+
+uscire dal ruolo di root
+exit
+
 entrare nell'ambiente postgresql come utente qbgest
 psql -h localhost -d postgres -U qbgest
 
