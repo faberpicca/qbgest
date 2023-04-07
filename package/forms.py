@@ -174,7 +174,7 @@ class EditIVAForm(FlaskForm):
 class CassaForm(FlaskForm):
     descrizione = StringField('Descrizione', validators=[InputRequired()])
     data_contabile = DateField('Data contabile',validators=[Optional()])
-    partner = StringField('Partner o domiciliatario')
+    partner = StringField('Partner o domiciliatario', [partner_check_allow_empty])
     importo = FlexibleDecimalField('Importo', validators=[InputRequired()], places=None)
     submit = SubmitField('Salva')
 
@@ -193,7 +193,7 @@ class VoceCassaForm(FlaskForm):
 class GenericoForm(FlaskForm):
     descrizione = StringField('Descrizione', validators=[InputRequired()])
     data_contabile = DateField('Data contabile',validators=[Optional()])
-    partner = StringField('Partner')
+    partner = StringField('Partner', [partner_check_allow_empty])
     submit = SubmitField('Salva')
 
 class VoceGenericoForm(FlaskForm):

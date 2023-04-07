@@ -349,11 +349,13 @@ def movimenti(id):#mostra i movimenti sul singolo conto
     impostazioni=Impostazioni.query.get(1)
     conto=Conto.query.get(id)
     filtro_form=FiltroForm()
+    del filtro_form.tipo_data
+    del filtro_form.stato
+    del filtro_form.bozze
     partners = Partner.query.order_by(Partner.nome).with_entities(Partner.nome).all()
     if filtro_form.validate_on_submit():
         current_user.dal=filtro_form.dal.data
         current_user.al=filtro_form.al.data
-        current_user.bozze=filtro_form.bozze.data
         current_user.partner=Partner.query.filter_by(nome=filtro_form.partner.data).first()
         datalog="Modificato filtro: dal["+format_date(current_user.dal)+"] al["+format_date(current_user.al)+"] tipo["+str(current_user.tipo_data)+"] stato["+str(current_user.stato)+"] bozze["+str(current_user.bozze)+"] partner["+nome(current_user.partner)+"]"
         log = Log(datalog=datalog, user=current_user.username, timestamp = func.now())
@@ -363,9 +365,6 @@ def movimenti(id):#mostra i movimenti sul singolo conto
     else:
         filtro_form.dal.data=current_user.dal
         filtro_form.al.data=current_user.al
-        filtro_form.tipo_data.data=current_user.tipo_data
-        filtro_form.stato.data=current_user.stato
-        filtro_form.bozze.data=current_user.bozze
         if current_user.partner != None: filtro_form.partner.data=current_user.partner.nome
     filtro="filter(Movimento.conto==conto)."
     filter_partner = current_user.partner
@@ -577,6 +576,8 @@ def registrazioni(id):#mostra le registrazioni appartenenti ad un registro
         registrazioni=bozze+registr
         return render_template('fatture.html', registrazioni=registrazioni, registro=registro, filtro_form=filtro_form, partners=partners, totale=totale, saldo=saldo)
     if categoria=="Cassa":
+        del filtro_form.tipo_data
+        del filtro_form.stato
         if import_form.submit2.data and import_form.validate():
             filtro=Filtro_estratto_conto.query.all()
             filename=os.path.join(here, 'estratto.txt')
@@ -621,8 +622,6 @@ def registrazioni(id):#mostra le registrazioni appartenenti ad un registro
         else:
             filtro_form.dal.data=current_user.dal
             filtro_form.al.data=current_user.al
-            filtro_form.tipo_data.data=current_user.tipo_data
-            filtro_form.stato.data=current_user.stato
             filtro_form.bozze.data=current_user.bozze
             if current_user.partner != None: filtro_form.partner.data=current_user.partner.nome
         filter_partner = current_user.partner
@@ -659,6 +658,8 @@ def registrazioni(id):#mostra le registrazioni appartenenti ad un registro
         registrazioni=bozze+registr
         return render_template('casse.html', registrazioni=registrazioni, registro=registro, filtro_form=filtro_form, import_form = import_form, partners=partners, totale=totale, saldo_iniziale=saldo_iniziale)
     if categoria=="Generico":
+        del filtro_form.tipo_data
+        del filtro_form.stato
         if filtro_form.submit_filtro.data and filtro_form.validate():
             current_user.dal=filtro_form.dal.data
             current_user.al=filtro_form.al.data
@@ -672,8 +673,6 @@ def registrazioni(id):#mostra le registrazioni appartenenti ad un registro
         else:
             filtro_form.dal.data=current_user.dal
             filtro_form.al.data=current_user.al
-            filtro_form.tipo_data.data=current_user.tipo_data
-            filtro_form.stato.data=current_user.stato
             filtro_form.bozze.data=current_user.bozze
             if current_user.partner != None: filtro_form.partner.data=current_user.partner.nome
         filtro="filter_by(registro=registro)."
@@ -822,6 +821,8 @@ def partner(id):#visualizza il partner
     partner=Partner.query.get(id)
     form = PartnerForm()
     filtro_form=FiltroForm()
+    del filtro_form.partner
+    del filtro_form.bozze
     print(filtro_form.submit_filtro.data)
     if filtro_form.submit_filtro.data and filtro_form.validate():
         current_user.dal=filtro_form.dal.data
@@ -1080,6 +1081,9 @@ def stampa_registro_iva(id):
     stampa=Stampa.query.get(id)
     allegati=stampa.allegato.order_by(Allegato.id).all()
     form = StampaForm()
+    del form.precedente_riga_stampa
+    del form.partner
+    del form.registrazione
     if form.submit.data and form.validate():
         stampa.nome=form.nome.data
         stampa.data_decorrenza=form.data_decorrenza.data
@@ -1108,6 +1112,10 @@ def stampa_partitario(id):
     allegati=stampa.allegato.order_by(Allegato.id).all()
     filtro_conto=stampa.filtro_conto.all()
     form = StampaForm()
+    del form.anno_stampa
+    del form.precedente_pagina_stampa
+    del form.precedente_riga_stampa
+    del form.registrazione
     partners = Partner.query.order_by(Partner.nome).with_entities(Partner.nome).all()
     if form.submit.data and form.validate():
         stampa.nome=form.nome.data
@@ -1134,6 +1142,8 @@ def stampa_libro_giornale(id):
     stampa=Stampa.query.get(id)
     allegati=stampa.allegato.order_by(Allegato.id).all()
     form = StampaForm()
+    del form.partner
+    del form.registrazione
     if form.submit.data and form.validate():
         stampa.nome=form.nome.data
         stampa.data_decorrenza=form.data_decorrenza.data
@@ -1164,6 +1174,10 @@ def stampa_libro_mastro(id):
     allegati=stampa.allegato.order_by(Allegato.id).all()
     filtro_conto=stampa.filtro_conto.all()
     form = StampaForm()
+    del form.anno_stampa
+    del form.precedente_pagina_stampa
+    del form.precedente_riga_stampa
+    del form.registrazione
     partners = Partner.query.order_by(Partner.nome).with_entities(Partner.nome).all()
     conti = Conto.query.with_entities(Conto.nome).all()
     if form.submit.data and form.validate():
@@ -1194,6 +1208,11 @@ def stampa_bilancio_contabile(id):
     allegati=stampa.allegato.order_by(Allegato.id).all()
     filtro_conto=stampa.filtro_conto.all()
     form = StampaForm()
+    del form.anno_stampa
+    del form.precedente_pagina_stampa
+    del form.precedente_riga_stampa
+    del form.partner
+    del form.registrazione
     if form.submit.data and form.validate():
         stampa.nome=form.nome.data
         stampa.data_decorrenza=form.data_decorrenza.data

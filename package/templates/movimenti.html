@@ -14,12 +14,9 @@
           <tr>
             <td> {{ filtro_form.dal.label }} <br> {{ filtro_form.dal(size=10) }} <br> {% for error in filtro_form.dal.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
             <td> {{ filtro_form.al.label }} <br> {{ filtro_form.al(size=10) }} <br> {% for error in filtro_form.al.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
-            <td hidden> {{ filtro_form.tipo_data.label }} <br> {{ filtro_form.tipo_data }} <br> {% for error in filtro_form.tipo_data.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
             <td> </td>
             <td> {{ filtro_form.partner.label }} <br> {{ filtro_form.partner(size=30,list="partner_datalist",autocomplete="off") }} <br> {% for error in filtro_form.partner.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
-            <td hidden> {{ filtro_form.stato.label }} <br> {{ filtro_form.stato(size=30) }} <br> {% for error in filtro_form.stato.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
             <td> </td>
-            <td hidden> {{ filtro_form.bozze.label }} <br> {{ filtro_form.bozze(size=10) }} <br> {% for error in filtro_form.bozze.errors %} <span style="color: red;">[{{ error }}] </span> {% endfor %}</td>
             <td> </td>
             <td> {{ filtro_form.submit_filtro() }} </td>
           </tr>
