@@ -1,6 +1,6 @@
 # QBGest
 
-Demo disponibile qui [QBGest](https://ctfossolo.centu.it/qbdemo/registri) user demo password demo
+Demo disponibile qui [QBGest](https://server.ctfossolo.it/qbdemo/registri) user demo password demo
 
 QBGest è un software open source pensato per la gestione della contabilità di una piccola azienda, prende spunto dai software Odoo ed Esatto coniugando quelli che sono a mio avviso i loro punti di forza. Come dice il suo stesso nome QB="Quanto Basta" il software è di impronta minimalista ed essenziale, ma fa comunque tutto quello che serve. Viene utilizzato ormai da due anni per gestire la contabilità di una piccola azienda e ha raggiunto un buon grado di maturità. Ho ritenuto quindi opportuno condividere con la comunità open source sia il software, che le nozioni che ho appreso/sviluppato nella speranza che possa essere di aiuto per qualcuno.
 
