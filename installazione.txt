@@ -42,6 +42,7 @@ uscire dall'ambiente postgresql
 
 popolare il database
 psql -h localhost -d qbgestdb -U qbgest < qbgest-main/qbgest_db.txt
+cat qbgest_db.txt | psql -h localhost -d qbgestdb -U qbgest (powershell)
 
 creare l'ambiente virtuale di python
 virtualenv -p python3 venv
